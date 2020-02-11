@@ -1,12 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5f4401e0-3612-4b72-8405-ebae6bbeacc6" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1XfKltLcOpMhXrw3lQ1PKVKyaEw" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sagar.gueye\Desktop\smartEV\web" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f4401e0-3612-4b72-8405-ebae6bbeacc6" name="Default Changelist" comment="" />
+      <created>1581431862255</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581431862255</updated>
+      <workItem from="1581431864346" duration="5068000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="232" y="143" key="#Notifications" timestamp="1581433420787">
+      <screen x="0" y="0" width="1280" height="972" />
+    </state>
+    <state x="232" y="143" key="#Notifications/0.0.1280.972@0.0.1280.972" timestamp="1581433420787" />
+    <state x="420" y="240" key="FileChooserDialogImpl" timestamp="1581433318200">
+      <screen x="0" y="0" width="1280" height="972" />
+    </state>
+    <state x="420" y="240" key="FileChooserDialogImpl/0.0.1280.972@0.0.1280.972" timestamp="1581433318200" />
+    <state x="141" y="117" key="SettingsEditor" timestamp="1581433909133">
+      <screen x="0" y="0" width="1280" height="972" />
+    </state>
+    <state x="141" y="117" key="SettingsEditor/0.0.1280.972@0.0.1280.972" timestamp="1581433909133" />
   </component>
 </project>
