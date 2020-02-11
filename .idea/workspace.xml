@@ -29,6 +29,9 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sagar.gueye\Desktop\smartEV\web\lib\fontawesome" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sagar.gueye\Desktop\smartEV\web" />
     </key>
@@ -43,7 +46,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1581431862255</updated>
-      <workItem from="1581431864346" duration="5068000" />
+      <workItem from="1581431864346" duration="6862000" />
     </task>
     <servers />
   </component>
