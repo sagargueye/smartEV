@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/bootstrap-grid.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
     <script type="text/javascript" src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
@@ -35,20 +36,22 @@
         </ul>
     </div>
 </nav>
-
-<div class="section featured-image">
-    <div class="section-inner">
-        <img src="https://www.ladn.eu/wp-content/uploads/2017/10/voiture-electrique-ville-marques.jpg" class="attachment-page-header size-page-header wp-post-image" alt="" width="100%" height="640">
+<div id="content" style="margin-left: 10%; margin-right: 10%">
+    <div class="section featured-image">
+        <div class="section-inner" style="background-image: linear-gradient(rgba(0,0,0, 0.5), rgba(0,0,0, 0.5)), url('capture.PNG');" width="100%" height="640">
+            <img src="capture.PNG" class="attachment-page-header size-page-header wp-post-image" alt="" width="100%" height="640">
+            <h1 STYLE="margin-left: 5%; color:white; height: 80px">Carte</h1>
+        </div>
     </div>
-</div>
-<div id="map" style="width:100%; height:100%; padding: 5px; margin-top: 5px;"></div>
+    <div id="map" style="width:100%; height:100%; padding: 5px; margin-top: 5px;"></div>
 
-<div class="section standard_page general-content">
-    <div class="section-inner">
-        <h1>Services</h1>
-        <p>Electric vehicles (EVs) are set to play an important role in improving our air quality, with both UK Government and Scottish Government stating that by 2040 and 2032 respectively, all new cars and vans must be zero emission. Our local electricity networks will need to evolve and change to cope with the growing trend towards electrification of both transport and heat. These changes will include traditional upgrading of networks, but also a new and increasingly viable range of smart and market-based solutions.</p>
-        <p>The Smart EV project is funded by Scottish and Southern Energy Networks through its Network Innovation Allowance and delivered by EA Technology. It is a follow-on project to My Electric Avenue. The evidence from <a href="http://myelectricavenue.info/">My Electric Avenue</a> shows that electric vehicles (EVs) will cause an impact on the local electricity network, requiring significant investment by Distribution Network Operators (DNOs). My Electric Avenue also demonstrated that demand-side response solutions can work, and can work sympathetically with the network, EVs and people.</p>
+    <div class="section standard_page general-content">
+        <div class="section-inner">
+            <h1>Services</h1>
+            <p>Electric vehicles (EVs) are set to play an important role in improving our air quality, with both UK Government and Scottish Government stating that by 2040 and 2032 respectively, all new cars and vans must be zero emission. Our local electricity networks will need to evolve and change to cope with the growing trend towards electrification of both transport and heat. These changes will include traditional upgrading of networks, but also a new and increasingly viable range of smart and market-based solutions.</p>
+            <p>The Smart EV project is funded by Scottish and Southern Energy Networks through its Network Innovation Allowance and delivered by EA Technology. It is a follow-on project to My Electric Avenue. The evidence from <a href="http://myelectricavenue.info/">My Electric Avenue</a> shows that electric vehicles (EVs) will cause an impact on the local electricity network, requiring significant investment by Distribution Network Operators (DNOs). My Electric Avenue also demonstrated that demand-side response solutions can work, and can work sympathetically with the network, EVs and people.</p>
 
+        </div>
     </div>
 </div>
 <!--FOOTER-->
@@ -88,7 +91,7 @@
             </div>
         </div>
     </div>
-    <div class="footer-copyright text-center py-3">Gueye | VERGNON Â© 2020 Copyright:
+    <div class="footer-copyright text-center py-3">Gueye | VERGNON © 2020 Copyright:
         <a href="#"> SmartEV.com</a>
     </div>
 </footer>
