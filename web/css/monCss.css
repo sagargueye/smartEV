@@ -229,3 +229,15 @@
 .div_img img:hover {
     /*height:450px;*/
 }
+.dropdown-item{
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-right: 5px;
+    margin-left: 5px;
+    text-align: center !important;
+    color: #ffffff9c;
+}
+.dropdown-item:hover{
+    color: white!important;
+    background-color: transparent;
+}
