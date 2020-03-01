@@ -1,67 +1,64 @@
-var map;
-mapboxgl.accessToken = "pk.eyJ1IjoiY3Zlcmdub24iLCJhIjoiY2s2ajVodGoyMDFvaTNxbGp1eGRqa3ZwbCJ9._FqRqJ8LXtsLYYURGUcydQ";
-var start_geocoder;
-var end_geocoder;
-var token_locationiq = "07076b95eec962";
-var token_here = "tVIwsP4pVf0zkKgUYV0XKFpI3hdOSJ_yJkTb4Ls_Tec";
-var num_click;
+$(document).ready(function () {
+	var map;
+	mapboxgl.accessToken = "pk.eyJ1IjoiY3Zlcmdub24iLCJhIjoiY2s2ajVodGoyMDFvaTNxbGp1eGRqa3ZwbCJ9._FqRqJ8LXtsLYYURGUcydQ";
+	var start_geocoder;
+	var end_geocoder;
+	var token_locationiq = "07076b95eec962";
+	var token_here = "tVIwsP4pVf0zkKgUYV0XKFpI3hdOSJ_yJkTb4Ls_Tec";
+	var num_click;
 
-
-function initialize() {
 	map = L.map('map').setView([48.833, 2.333], 7); // LIGNE 14
 
-	  var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
-        attribution: '© OpenStreetMap contributors',
-        maxZoom: 19
-    });
+	var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
+		attribution: '© OpenStreetMap contributors',
+		maxZoom: 19
+	});
 
 	var markerDepart;
 	var markerArrivee;
 
-
-	map.on('click', onMapClick);	
+	map.on('click', onMapClick);
 	num_click = 0;
 	var markers = L.markerClusterGroup();
-
 
 	stations_recharge.forEach(function(element) {
 		var AddressLine1 = (element['AddressInfo']['AddressLine1'])?element['AddressInfo']['AddressLine1']:"";
 		var Town = (element['AddressInfo']['Town'])?element['AddressInfo']['Town']:"";
 		var ContactTelephone1 = (element['AddressInfo']['ContactTelephone1'])?element['AddressInfo']['ContactTelephone1']:"";
 		var customPopup = AddressLine1 + "<br>"
-		+ Town + "<br>"
-		+ ContactTelephone1;
-	var marker = L.marker([element["AddressInfo"]["Latitude"], element["AddressInfo"]["Longitude"]]);
-	marker.bindPopup(customPopup);
-	markers.addLayer(marker);
-		
-
+			+ Town + "<br>"
+			+ ContactTelephone1;
+		var marker = L.marker([element["AddressInfo"]["Latitude"], element["AddressInfo"]["Longitude"]]);
+		marker.bindPopup(customPopup);
+		markers.addLayer(marker);
 	});
+
 	map.addLayer(osmLayer);
 	map.addLayer(markers);
-	
 
-	
-	start_geocoder = new MapboxGeocoder({  
+	start_geocoder = new MapboxGeocoder({
 		accessToken: mapboxgl.accessToken,
-		mapboxgl: map, 
+		mapboxgl: map,
 		marker: true
 	});
 
 	document.getElementById("start_geocoder").appendChild(start_geocoder.onAdd(map));
-	
-	end_geocoder = new MapboxGeocoder({  
+
+	end_geocoder = new MapboxGeocoder({
 		accessToken: mapboxgl.accessToken,
-		mapboxgl: map, 
+		mapboxgl: map,
 		marker: true
 	});
 
 	document.getElementById("end_geocoder").appendChild(end_geocoder.onAdd(map));
 
+});//END READY
 
 
 
-};
+
+
+
 
 function searchItineraire()
 { 

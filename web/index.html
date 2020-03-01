@@ -1,61 +1,41 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<html lang="fr">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
-    <script type="text/javascript" src="js/popper.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js'></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
-    <script type="text/javascript" src="js/leaflet.markercluster-src.js"></script>
-    <script type="text/javascript" src="js/openchargemap-france.js"></script>
+    <meta charset="UTF-8"/>
 
 
+    <link rel="stylesheet" href="css/monCss.css" type="text/css">
+    <link rel="stylesheet" href="css/overlay.css" type="text/css">
     <link rel="stylesheet" href="css/bootstrap.css" />
     <link rel="stylesheet" href="css/bootstrap-grid.css" />
     <link href="lib/fontawesome/css/fontawesome.css" rel="stylesheet">
     <link href="lib/fontawesome/css/brands.css" rel="stylesheet">
     <link href="lib/fontawesome/css/solid.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css" type="text/css">
-    <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/bootstrap.css" />
-    <link rel="stylesheet" href="css/bootstrap-grid.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+    <link href="lib/fontawesome/css/all.css" rel="stylesheet">
+    <link href="lib/fontawesome/css/regular.css" rel="stylesheet">
+    <link href="lib/fontawesome/css/svg-with-js.css" rel="stylesheet">
+    <link href="lib/fontawesome/css/v4-shims.css" rel="stylesheet">
     <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
     <link rel="stylesheet" href="css/MarkerCluster.css" />
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css" type="text/css"/>
-    <link href="lib/fontawesome/css/fontawesome.css" rel="stylesheet">
-    <link href="lib/fontawesome/css/brands.css" rel="stylesheet">
-    <link href="lib/fontawesome/css/solid.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/monCss.css" type="text/css">
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css" type="text/css">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
 
-    <script type="text/javascript" src="js/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js'></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="js/bootstrap.bundle.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
     <script type="text/javascript" src="js/leaflet.markercluster-src.js"></script>
     <script type="text/javascript" src="js/openchargemap-france.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
 
 </head>
 
-<body onload="initialize()" >
-    <div class="containerr">
+<body >
+    <div class="containerr ">
         <div class="form-row">
             <div class="col">
                 <nav class="navbar navbar-light bg-light navbar-expand-lg" style="background-color: #0b4884 !important; color:wheat;">
@@ -65,13 +45,13 @@
                     <div style="float: right">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#" style="color: wheat;">Accueil</a>
+                                <a class="nav-link active" href="#service" style="color: wheat;">Nos services</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" style="color:wheat;">A propos</a>
+                                <a class="nav-link" href="#apropos" style="color:wheat;">A propos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" style="color: wheat;">Contact</a>
+                                <a class="nav-link" href="#monFooter" style="color: wheat;">Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -85,30 +65,21 @@
                     </button>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                        <div style="display: flex">
+                        <div style="display: flex;">
                             <div >
-                                <form class="px-4 py-3">
+                                <form class="px-2 py-3 myform" >
                                     <div class="form-group">
-                                        <label for="exampleDropdownFormEmail1">Adrese de d�part</label>
+                                        <label for="exampleDropdownFormEmail1">Adrese de départ</label>
                                         <input type="text" class="form-control" id="exampleDropdownFormEmail1" placeholder="11 rue des nuls, Paris">
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleDropdownFormPassword1">Adresse d'arriv�e</label>
+                                        <label for="exampleDropdownFormPassword1">Adresse d'arrivée</label>
                                         <input type="text" class="form-control" id="exampleDropdownFormPassword1" placeholder="11 rue des geeks, Lyon">
                                     </div>
                                     <button type="submit" class="btn btn-primary">GO!</button>
                                 </form>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Bonne route gros!</a>
-                            </div>
-                            <div >
-                                <div >
-                                <a class="dropdown-item" href="#">
-                                    <i class="fa fa-long-arrow-alt-up"></i>
-                                    <i class="fa fa-long-arrow-alt-down"></i>
-                                </a>
-                                </div>
+                                <div class="dropdown-divider" ></div>
+                                <a class="dropdown-item" >Bonne route gros!</a>
                             </div>
                         </div>
                     </div>
@@ -157,27 +128,27 @@
                 </div>
             </div>
 
-            <div style="height: 80px;padding-top: 20px; padding-left: 40px ;color:white;font-size: 1.625rem; background-color: black">Maps - Navigation itin�raire</div>
+            <div style="height: 80px;padding-top: 20px; padding-left: 40px ;color:white;font-size: 1.625rem;background: rgba(34, 33, 38, 0.9);">Maps - Navigation itinéraire</div>
 
-            <div style="display: flex;padding: 5px;height:100%;" >
+            <div style="display: flex;padding: 5px 5px 5px 0 ;height:100%;" >
                 <div style="width:20%;">
-                    <div style="display: flex">
-                        <div >
-                            <form class="px-2 py-3" action="#">
+                    <div style="display: flex;margin-left: 10px;">
+                        <div style="width:80%;">
+                            <form class="px-2 py-3" >
                                 <div class="form-group">
-                                    <label for="exampleDropdownFormEmail1">Adrese de d�part</label>
+                                    <label for="exampleDropdownFormEmail1">Adrese de départ</label>
                                     <input type="text" class="form-control" id="start_geocoder" placeholder="11 rue des nuls, Paris">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleDropdownFormPassword1">Adresse d'arriv�e</label>
+                                    <label for="exampleDropdownFormPassword1">Adresse d'arrivée</label>
                                     <input type="text" class="form-control" id="end_geocoder" placeholder="11 rue des geeks, Lyon">
                                 </div>
                                 <button type="submit" class="btn btn-primary" onclick="searchItineraire()" >GO!</button>
                             </form>
                         </div>
-                        <div style="padding-top: 40%; padding-right: 5px;">
+                        <div style="padding-top: 40%; padding-right: 5px;width:20%;">
                             <div >
-                                <a class="dropdown-item" href="#" style="">
+                                <a id="echange" class="link" >
                                     <i class="fa fa-long-arrow-alt-up"></i>
                                     <i class="fa fa-long-arrow-alt-down"></i>
                                 </a>
@@ -185,25 +156,44 @@
                         </div>
                     </div>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Bonne route gros!</a>
+                    <a class="dropdown-item" >Bonne route gros!</a>
                 </div>
-                <div id="map" style="width:80%;margin-left: 10px;"></div>
+                <div id="map" style="width:80%;"></div>
             </div>
-
             <div class="section text-body standard_page general-content">
-                <div class="section-inner" style="margin-left: 5px ;padding-top: 30px; ">
-                    <h1 style="border-bottom: double;">Services</h1>
-                    <p>Electric vehicles (EVs) are set to play an important role in improving our air quality, with both UK Government and Scottish Government stating that by 2040 and 2032 respectively, all new cars and vans must be zero emission. Our local electricity networks will need to evolve and change to cope with the growing trend towards electrification of both transport and heat. These changes will include traditional upgrading of networks, but also a new and increasingly viable range of smart and market-based solutions.</p>
-                    <p>The Smart EV project is funded by Scottish and Southern Energy Networks through its Network Innovation Allowance and delivered by EA Technology. It is a follow-on project to My Electric Avenue. The evidence from <a href="http://myelectricavenue.info/">My Electric Avenue</a> shows that electric vehicles (EVs) will cause an impact on the local electricity network, requiring significant investment by Distribution Network Operators (DNOs). My Electric Avenue also demonstrated that demand-side response solutions can work, and can work sympathetically with the network, EVs and people.</p>
-                    <h1 style="border-bottom: double;">A propos</h1>
-                    <p>Electric vehicles (EVs) are set to play an important role in improving our air quality, with both UK Government and Scottish Government stating that by 2040 and 2032 respectively, all new cars and vans must be zero emission. Our local electricity networks will need to evolve and change to cope with the growing trend towards electrification of both transport and heat. These changes will include traditional upgrading of networks, but also a new and increasingly viable range of smart and market-based solutions.</p>
-                    <p>The Smart EV project is funded by Scottish and Southern Energy Networks through its Network Innovation Allowance and delivered by EA Technology. It is a follow-on project to My Electric Avenue. The evidence from <a href="http://myelectricavenue.info/">My Electric Avenue</a> shows that electric vehicles (EVs) will cause an impact on the local electricity network, requiring significant investment by Distribution Network Operators (DNOs). My Electric Avenue also demonstrated that demand-side response solutions can work, and can work sympathetically with the network, EVs and people.</p>
-
+                <div class="section-inner" style="padding-top: 10px; ">
+                    <h3 id="service">Services</h3>
+                    <div style="display: flex;">
+                        <div  class="col-sm-3 my-auto" >
+                            <img src="borneservice.png" style="width: 90% ; height: 90%;">
+                        </div>
+                        <div style="padding-left:10px" class="col-sm-9 my-auto">
+                            <p>Electric vehicles (EVs) are set to play an important role in improving our air quality, with both UK Government and Scottish Government stating that by 2040 and 2032 respectively, all new cars and vans must be zero emission. Our local electricity networks will need to evolve and change to cope with the growing trend towards electrification of both transport and heat. These changes will include traditional upgrading of networks, but also a new and increasingly viable range of smart and market-based solutions.</p>
+                            <p>The Smart EV project is funded by Scottish and Southern Energy Networks through its Network Innovation Allowance and delivered by EA Technology. It is a follow-on project to My Electric Avenue. The evidence from <a href="http://myelectricavenue.info/">My Electric Avenue</a> shows that electric vehicles (EVs) will cause an impact on the local electricity network, requiring significant investment by Distribution Network Operators (DNOs). My Electric Avenue also demonstrated that demand-side response solutions can work, and can work sympathetically with the network, EVs and people.</p>
+                        </div>
+                    </div>
+                    <h3 id="apropos" style="">A propos</h3>
+                    <div style="display: flex;">
+                        <div  class="col-sm-3 my-auto" >
+                            <img src="aboutUs.jpg" style="width: 90% ; height: 90%;">
+                        </div>
+                        <div style="padding-left:10px" class="col-sm-9 my-auto">
+                            <p>Nous sommes deux étudiants en premiere année de formation en école d'ingénieur.
+                                Nous sommes spécialisés dans le developpement informatique et réseaux de communication.
+                            </p>
+                            <p>Dans le cadre de notre cours de web, nous sommes amener à réaliser un projet qui a pour objectif de
+                                mettre en application nos connaissances et compétences en technologies et langages du Web
+                                pour concevoir cette application, SmartEV.
+                                SmartEV est une solution qui permet à n’importe quel possesseur de véhicule électrique de localiser des stations de recharge
+                                compatibles, et d’obtenir des itinéraires “intelligents”.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <!--FOOTER-->
-        <footer class="page-footer font-small cyan darken-3" style="background-color:#070b48;color:wheat;">
+        <footer id="monFooter" class="page-footer font-small cyan darken-3 " style="background-color:#070b48;color:wheat;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 py-5">
@@ -227,7 +217,7 @@
                     </div>
                 </div>
             </div>
-            <div class="footer-copyright text-center py-3">GUEYE | VERGNON � 2020 Copyright:
+            <div class="footer-copyright text-center py-3">Sagar GUEYE | Corentin VERGNON © 2020 Copyright
                 <a href="#"> SmartEV.com</a>
             </div>
         </footer>
@@ -236,3 +226,15 @@
 
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+        $("#echange").click(function () {
+            $start=$("#start_geocoder").val();
+            $end=$("#end_geocoder").val();
+            console.log($start);
+            console.log($end);
+            $("#end_geocoder").val($start);
+            $("#start_geocoder").val($end);
+        });
+    });
+</script>
