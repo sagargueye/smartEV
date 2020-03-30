@@ -52,9 +52,10 @@ $(document).ready(function () {
 
 	document.getElementById("end_geocoder").appendChild(end_geocoder.onAdd(map));
 
+	//permuter les adresse destinataire et d'arriver
 	$("#echange").click(function () {
-		$start=$("#start_geocoder").val();
-		$end=$("#end_geocoder").val();
+		$start = $("#start_geocoder").val();
+		$end = $("#end_geocoder").val();
 		$("#end_geocoder").val($start);
 		$("#start_geocoder").val($end);
 	});
