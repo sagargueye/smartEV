@@ -52,6 +52,13 @@ $(document).ready(function () {
 
 	document.getElementById("end_geocoder").appendChild(end_geocoder.onAdd(map));
 
+	$("#echange").click(function () {
+		$start=$("#start_geocoder").val();
+		$end=$("#end_geocoder").val();
+		$("#end_geocoder").val($start);
+		$("#start_geocoder").val($end);
+	});
+
 });//END READY
 
 
@@ -74,7 +81,7 @@ function searchItineraire()
 	.then(function(data) {
 		get_itineraire(data);
 	});
-};
+}
 
 function get_itineraire(data)
 {
