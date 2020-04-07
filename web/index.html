@@ -34,7 +34,7 @@
 
 </head>
 
-<body >
+<body onload="initialize()">
     <div class="containerr ">
         <div class="form-row">
             <div class="col">
@@ -69,14 +69,14 @@
                             <div >
                                 <form class="px-2 py-3 myform" >
                                     <div class="form-group">
-                                        <label for="exampleDropdownFormEmail1">Adrese de départ</label>
+                                        <label for="exampleDropdownFormEmail1">Adresse de départ</label>
                                         <input type="text" class="form-control" id="exampleDropdownFormEmail1" placeholder="11 rue des nuls, Paris">
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleDropdownFormPassword1">Adresse d'arrivée</label>
                                         <input type="text" class="form-control" id="exampleDropdownFormPassword1" placeholder="11 rue des geeks, Lyon">
                                     </div>
-                                    <button  type="submit" class="btn btn-primary">GO!</button>
+                                    <button type="submit" class="btn btn-primary">GO!</button>
                                 </form>
                                 <div class="dropdown-divider" ></div>
                                 <a class="dropdown-item" >Bonne route gros!</a>
@@ -136,14 +136,14 @@
                         <div style="width:90%;">
                             <div class="px-2 py-3" >
                                 <div class="form-group">
-                                    <label for="start_geocoder">Adrese de départ <i class="fa fa-map-signs"></i></label>
-                                    <input type="text" class="form-control" id="start_geocoder" placeholder="10 rue des nuls, Paris">
+                                    <label for="start_geocoder">Adresse de départ <i class="fa fa-map-signs"></i></label>
+                                    <input type="text" class="form-control" id="start_geocoder" placeholder="...">
                                 </div>
                                 <div class="form-group">
                                     <label for="end_geocoder">Adresse d'arrivée <i class="fa fa-map-signs"></i></label>
-                                    <input type="text" class="form-control" id="end_geocoder" placeholder="20 rue des geeks, Lyon">
+                                    <input type="text" class="form-control" id="end_geocoder" placeholder="...">
                                 </div>
-                                <button id="rechercheItin"  class="btn btn-primary" ><!-- Ronclick="earchItineraire()">-->GO!</button>
+                                <button id="rechercheItin"  class="btn btn-primary" onclick="searchItineraire()">GO!</button>
                             </div>
                         </div>
                         <div style="padding-top: 30%; padding-right: 5px;width:10%;">
