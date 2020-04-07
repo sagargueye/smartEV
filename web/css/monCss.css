@@ -1,3 +1,67 @@
+.form-group{
+    color:white
+}
+.first_div{
+    margin-left: 10px;
+    color: white;
+}
+.first_div .far, .first_div .fas{
+    text-align: center;
+    margin-bottom: 20px;
+}
+.fa-liaison-itineraire{
+    font-size: 5px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff82;
+    display: block!important;
+}
+.bande_maps{
+    height: 80px;
+    padding-top: 20px;
+    padding-left: 40px ;
+    color:white;
+    font-size: 1.625rem;background: rgba(34, 33, 38, 0.9);
+}
+.divider {
+    height: 0;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-top: 3px solid #376798;
+}
+.itin_list{
+    margin: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    overflow-wrap: break-word;
+}
+.directions-mode-line {
+    border-bottom: 1px solid #ffffff82;
+    margin-left: 38px;
+}
+.directions-mode-separator
+.directions-mode-distance-time {
+    display: inline-block;
+    position: absolute;
+    top: -7px;
+    font-size: 11px;
+    color: #150101;
+    font-weight: 300;
+    background-color: #ffffff82;
+    padding-left: 5px;
+    padding-right: 5px;
+    z-index: 1;
+}
+.directions-mode-separator {
+    margin: auto 20px 20px 20px;
+    position: relative;
+    line-height: normal;
+    font-weight: normal;
+    z-index: 1;
+    transition: all 200ms;
+}
+
 .btn-secondary{
     background-color:#3439368a;
     border-color:#484f4c;
@@ -211,8 +275,8 @@
     color:white!important;
 }
 .containerr{
-    margin-left: 10%;
-    margin-right: 10% ;
+    margin-left: 8%;
+    margin-right: 8% ;
     background:#0b4884
 }
 .div_img {

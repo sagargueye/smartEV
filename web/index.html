@@ -76,7 +76,7 @@
                                         <label for="exampleDropdownFormPassword1">Adresse d'arrivée</label>
                                         <input type="text" class="form-control" id="exampleDropdownFormPassword1" placeholder="11 rue des geeks, Lyon">
                                     </div>
-                                    <button type="submit" class="btn btn-primary">GO!</button>
+                                    <button  type="submit" class="btn btn-primary">GO!</button>
                                 </form>
                                 <div class="dropdown-divider" ></div>
                                 <a class="dropdown-item" >Bonne route gros!</a>
@@ -128,25 +128,25 @@
                 </div>
             </div>
 
-            <div style="height: 80px;padding-top: 20px; padding-left: 40px ;color:white;font-size: 1.625rem;background: rgba(34, 33, 38, 0.9);">Maps - Navigation itinéraire</div>
+            <div class="bande_maps">Maps - Navigation itinéraire  </div>
 
-            <div style="display: flex;padding: 5px 5px 5px 0 ;height:100%;" >
-                <div style="width:20%;">
-                    <div style="display: flex;margin-left: 10px;">
-                        <div style="width:80%;">
-                            <form class="px-2 py-3" >
+            <div style="display: flex;padding: 5px 5px 5px 0 ;" >
+                <div style="width:25%;">
+                    <div  style="display: flex;margin-left: 10px;">
+                        <div style="width:90%;">
+                            <div class="px-2 py-3" >
                                 <div class="form-group">
-                                    <label for="start_geocoder">Adrese de départ</label>
+                                    <label for="start_geocoder">Adrese de départ <i class="fa fa-map-signs"></i></label>
                                     <input type="text" class="form-control" id="start_geocoder" placeholder="10 rue des nuls, Paris">
                                 </div>
                                 <div class="form-group">
-                                    <label for="end_geocoder">Adresse d'arrivée</label>
+                                    <label for="end_geocoder">Adresse d'arrivée <i class="fa fa-map-signs"></i></label>
                                     <input type="text" class="form-control" id="end_geocoder" placeholder="20 rue des geeks, Lyon">
                                 </div>
-                                <button type="submit" class="btn btn-primary" onclick="searchItineraire()" >GO!</button>
-                            </form>
+                                <button id="rechercheItin"  class="btn btn-primary" ><!-- Ronclick="earchItineraire()">-->GO!</button>
+                            </div>
                         </div>
-                        <div style="padding-top: 40%; padding-right: 5px;width:20%;">
+                        <div style="padding-top: 30%; padding-right: 5px;width:10%;">
                             <div >
                                 <a id="echange" class="link" >
                                     <i class="fa fa-long-arrow-alt-up"></i>
@@ -155,10 +155,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="dropdown-divider"></div>
+                    <div class="divider"></div>
+
+                    <div id="itinbloc" class="first_div">
+                        <div> <i class="far fa-circle"> 139 rue des salengro</i></div>
+                        <div style="display: flex" >
+                          <div id="pointilé" style="width:5%;">
+                            <i class="fas fa-circle fa-liaison-itineraire"></i>
+                            <i class="fas fa-circle fa-liaison-itineraire"></i>
+                            <i class="fas fa-circle fa-liaison-itineraire"></i>
+                            <i class="fas fa-circle fa-liaison-itineraire"></i>
+                            <i class="fas fa-circle fa-liaison-itineraire"></i>
+                            <i class="fas fa-circle fa-liaison-itineraire"></i>
+                            <i class="fas fa-circle fa-liaison-itineraire"></i>
+                          </div>
+                          <div  id="itindata" style="width:95%;"> </div>
+                        </div>
+                        <div> <i class="fas fa-map-marker-alt">  11 avenue des champs</i>  </div>
+                    </div>
+
                     <a class="dropdown-item" >Bonne route gros!</a>
                 </div>
-                <div id="map" style="width:80%;"></div>
+                <div id="map" style="width:75%;"></div>
             </div>
             <div class="section text-body standard_page general-content">
                 <div class="section-inner" style="padding-top: 10px; ">

@@ -60,18 +60,21 @@ $(document).ready(function () {
 		$("#start_geocoder").val($end);
 	});
 
+	$("#itinbloc").hide();
+	//on test ici puisse que la fonction searchItineraire ne marche pas pour linstant
+	$("#rechercheItin").click(function () {
+		$onMetraLesParametre=null;
+		getHtmlItin($onMetraLesParametre);
+	});
+
 });//END READY
 
 
-
-
-
-
-
 function searchItineraire()
-{ 
+{
 	var lat;
 	var lon;
+	var token_locationiq = "07076b95eec962";
 
 	url1 = 'https://eu1.locationiq.com/v1/search.php?key='+ token_locationiq + '&q=' + document.getElementById('start_geocoder').value + '&format=json';
 	url2 = 'https://eu1.locationiq.com/v1/search.php?key='+ token_locationiq + '&q=' + document.getElementById('end_geocoder').value + '&format=json';
@@ -82,6 +85,23 @@ function searchItineraire()
 	.then(function(data) {
 		get_itineraire(data);
 	});
+
+	//affichage itinéraire dans la page
+	$onMetraLesParametre=null;
+	getHtmlItin($onMetraLesParametre);
+
+}
+function getHtmlItin($onMetraLesParametre) {
+	$("#itinbloc").show();
+	$("#itindata").html(
+		'<div class="directions-mode-separator"><div class="directions-mode-line"></div><div class="directions-mode-distance-time">150&nbsp;m</div></div>'+
+		'<div class="itin_list"><i class="fa fa-directions"></i> Prendre à droite sur rue des fontagnare </div>'+
+		'<div class="directions-mode-separator"><div class="directions-mode-line"></div><div class="directions-mode-distance-time">450&nbsp;m</div></div>'+
+		'<div class="itin_list"><i class="fa fa-directions" style=" transform: scaleX(-1);"></i> Prendre à gauche sur avenue des encheres</div>'
+	);
+	$(".first_div .fa-map-marker-alt").html($("#end_geocoder").val());
+	$(".first_div .fa-circle").html($("#start_geocoder").val());
+	$('<div class="divider"></div>').insertAfter($("#itinbloc"));
 }
 
 function get_itineraire(data)
@@ -109,8 +129,6 @@ function draw_itineraire(array_coordinates)
 	var polyline = L.polyline(array_coordinates, {color: 'red'}).addTo(map);
 	map.fitBounds(polyline.getBounds());
 }
-
-
 
 function check_itineraire(itineraire)
 {
