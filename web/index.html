@@ -34,25 +34,17 @@
 
 </head>
 
-<body onload="initialize()">
+<body>
     <div class="containerr ">
         <div class="form-row">
             <div class="col">
                 <nav class="navbar navbar-light bg-light navbar-expand-lg" style="background-color: #0b4884 !important; color:wheat;">
-                    <div>
-                        <a class="navbar-brand" href="#" ><img src="logo2.png" style="height: 50px;"></a>
-                    </div>
+                    <div><a class="navbar-brand" href="#" ><img src="logo2.png" style="height: 50px;"></a></div>
                     <div style="float: right">
                         <ul class="nav">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#service" style="color: wheat;">Nos services</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#apropos" style="color:wheat;">A propos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#monFooter" style="color: wheat;">Contact</a>
-                            </li>
+                            <li class="nav-item"><a class="nav-link active" href="#service" style="color: wheat;">Nos services</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#apropos" style="color:wheat;">A propos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#monFooter" style="color: wheat;">Contact</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -93,7 +85,6 @@
                     <!-- <img src="bornederecharge.jpg" class="attachment-page-header size-page-header wp-post-image" alt="" >-->
                     <span id="sl_play" class="sl_command"></span>
                     <span id="sl_pause" class="sl_command"></span>
-
                     <span id="sl_i1" class="sl_command sl_i"></span>
                     <span id="sl_i2" class="sl_command sl_i"></span>
                     <span id="sl_i3" class="sl_command sl_i"></span>
@@ -128,7 +119,7 @@
                 </div>
             </div>
 
-            <div class="bande_maps">Maps - Navigation itinéraire  </div>
+            <div class="bande_maps">Maps - Navigation itinéraire </div>
 
             <div style="display: flex;padding: 5px 5px 5px 0 ;min-height: 600px;" >
                 <div style="width:25%;">
@@ -137,11 +128,18 @@
                             <div class="px-2 py-3" >
                                 <div class="form-group">
                                     <label for="start_geocoder">Adresse de départ <i class="fa fa-map-signs"></i></label>
-                                    <input type="text" class="form-control" id="start_geocoder" placeholder="...">
+                                    <input type="text" class="form-control" id="start_geocoder" placeholder="Entrer l'adresse de départ">
                                 </div>
                                 <div class="form-group">
                                     <label for="end_geocoder">Adresse d'arrivée <i class="fa fa-map-signs"></i></label>
-                                    <input type="text" class="form-control" id="end_geocoder" placeholder="...">
+                                    <input type="text" class="form-control" id="end_geocoder" placeholder="Entrer l'adresse d'arriver">
+                                </div>
+                                <div class="form-group">
+                                    <label for="type_vehicule">Type de véhicule <i class="fa fa-car"></i></label>
+                                    <select class="form-control" id="type_vehicule">
+                                        <option>Tesla model 3</option>
+                                        <option>RenaultZoe</option>
+                                    </select>
                                 </div>
                                 <button id="rechercheItin"  class="btn btn-primary" onclick="searchItineraire()">GO!</button>
                             </div>
@@ -158,20 +156,13 @@
                     <div class="divider"></div>
 
                     <div id="itinbloc" class="first_div">
-                        <div> <i class="far fa-circle"> 139 rue des salengro</i></div>
+                        <div> <i class="far fa-circle fa_depart"> 139 rue des salengro</i></div>
                         <div style="display: flex" >
                           <div id="pointilé" style="width:5%;">
-                            <i class="fas fa-circle fa-liaison-itineraire"></i>
-                            <i class="fas fa-circle fa-liaison-itineraire"></i>
-                            <i class="fas fa-circle fa-liaison-itineraire"></i>
-                            <i class="fas fa-circle fa-liaison-itineraire"></i>
-                            <i class="fas fa-circle fa-liaison-itineraire"></i>
-                            <i class="fas fa-circle fa-liaison-itineraire"></i>
-                            <i class="fas fa-circle fa-liaison-itineraire"></i>
                           </div>
                           <div  id="itindata" style="width:95%;"> </div>
                         </div>
-                        <div> <i class="fas fa-map-marker-alt">  11 avenue des champs</i>  </div>
+                        <div> <i class="fas fa-map-marker-alt fa_arrive"> 11 avenue des champs</i></div>
                     </div>
 
                     <a class="dropdown-item" >Bonne route gros!</a>

@@ -15,23 +15,19 @@ var end_latitude;
 var end_longitude;
 var bool;
 
-
-function initialize() {
+$(document).ready(function () {
 	map = L.map('map').setView([48.833, 2.333], 7); // LIGNE 14
-
-	  var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
-        attribution: '© OpenStreetMap contributors',
-        maxZoom: 19
-    });
+	var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
+			attribution: '© OpenStreetMap contributors',
+			maxZoom: 19
+	});
 
 	var markerDepart;
 	var markerArrivee;
 
-
 	map.on('click', onMapClick);	
 	num_click = 0;
 	var markers = L.markerClusterGroup();
-
 
 	stations_recharge.forEach(function(element) {
 		var AddressLine1 = (element['AddressInfo']['AddressLine1'])?element['AddressInfo']['AddressLine1']:"";
@@ -40,17 +36,14 @@ function initialize() {
 		var customPopup = AddressLine1 + "<br>"
 		+ Town + "<br>"
 		+ ContactTelephone1;
-	var marker = L.marker([element["AddressInfo"]["Latitude"], element["AddressInfo"]["Longitude"]]);
-	marker.bindPopup(customPopup);
-	markers.addLayer(marker);
-		
-
+		var marker = L.marker([element["AddressInfo"]["Latitude"], element["AddressInfo"]["Longitude"]]);
+		marker.bindPopup(customPopup);
+		markers.addLayer(marker);
 	});
+
 	map.addLayer(osmLayer);
 	map.addLayer(markers);
-	
 
-	
 	start_geocoder = new MapboxGeocoder({  
 		accessToken: mapboxgl.accessToken,
 		mapboxgl: map, 
@@ -75,12 +68,10 @@ function initialize() {
 		$("#start_geocoder").val($end);
 	});
 
+	$("#itinbloc").hide();
+});
 
-};
-
-
-function searchItineraire()
-{ 
+function searchItineraire(){
 	var lat;
 	var lon;
 
@@ -101,10 +92,9 @@ function searchItineraire()
 		arrayLatLng.push(data[1][0]["lat"]);
 		get_itineraire(arrayLatLng);
 	});
-};
+}
 
-function get_itineraire(arrayLatLng)
-{
+function get_itineraire(arrayLatLng){
 	var LatLng = "";
 	arrayLatLng.forEach(function(element, index) {		
 		if(arrayLatLng.length == index + 1)
@@ -120,7 +110,6 @@ function get_itineraire(arrayLatLng)
 		
 	});
 	
-	console.log("https://api.mapbox.com/directions/v5/mapbox/driving/"+LatLng+"?geometries=geojson&steps=true&access_token=pk.eyJ1IjoiY3Zlcmdub24iLCJhIjoiY2s2ajVodGoyMDFvaTNxbGp1eGRqa3ZwbCJ9._FqRqJ8LXtsLYYURGUcydQ");
 	url1 = "https://api.mapbox.com/directions/v5/mapbox/driving/"+LatLng+"?geometries=geojson&steps=true&access_token=pk.eyJ1IjoiY3Zlcmdub24iLCJhIjoiY2s2ajVodGoyMDFvaTNxbGp1eGRqa3ZwbCJ9._FqRqJ8LXtsLYYURGUcydQ";
 	Promise.all([
 			fetch(url1).then(function(res) { return res.json(); })
@@ -146,8 +135,6 @@ function get_itineraire(arrayLatLng)
 				boolCheckItineraire = false;
 			}
 		});
-		console.log(data[0]["routes"][0]["distance"]);
-		console.log(data[0]["routes"][0]["duration"]);
 		if(boolCheckItineraire == true)
 		{
 			draw_itineraire(array_coordinates);
@@ -156,14 +143,10 @@ function get_itineraire(arrayLatLng)
 	});
 }
 
-function draw_itineraire(array_coordinates)
-{
+function draw_itineraire(array_coordinates){
 	var polyline = L.polyline(array_coordinates, {color: 'red'}).addTo(map);
 	map.fitBounds(polyline.getBounds());
 }
-
-
-
 
 // Explication rapide de l'algorithme 
 // Je récupère toutes les coordonnées à partir du moment où la voiture passe en dessous des 50% de km d'autonomie (jusqu'à 20%, histoire de laisser une marge de réserve)
@@ -176,9 +159,7 @@ function draw_itineraire(array_coordinates)
 // - Je parcours la liste de toutes les stations pour chaque coordonnée : c'est long. En pratique, il faudrait faire appel à l'API d'OpenChargeMap et utiliser des paramètres pour restreindre la zone et récupérer seulement quelques stations.
 // Cela permettrait de gagner en temps d'exécution. En l'occurrence, pour éviter de surcharger l'API d'OpenChargeMap, je me suis contenté de cette méthode.
 
-function search_new_itineraire(leg)
-{
-	console.log("new itineraire");
+function search_new_itineraire(leg){
 	arrayLatLng.splice(arrayLatLng.length -2, 2);
 	var autonomie_voiture = 400000;
 	var distance = 0;
@@ -283,9 +264,7 @@ function getDistance(lat1,lon1,lat2,lon2) {
 	return Math.round(d);
 }
 
-
-function searchNearestStation(position)
-{
+function searchNearestStation(position){
 	var min = 100;
 	var nearestStation;
 	stations_recharge.forEach(function(element) {
@@ -343,25 +322,20 @@ function onMapClick(e) {
 	});
 }
 
-
-
-function displayItineraire(itineraire)
-{
-
-	console.log(itineraire);
+function displayItineraire(itineraire){
 	var blocItineraire = document.getElementById("itinbloc");
 	itineraire[0]["routes"][0]["legs"].forEach(function(legs) {
-		
 		legs["steps"].forEach(function(steps) {
 			steps["maneuver"]["instruction"];
-			$('#itinbloc').append('<div class="directions-mode-separator"><div class="directions-mode-line"></div><div class="directions-mode-distance-time">' + Math.trunc(steps["distance"]) + '&nbsp;m</div></div>' +
-			'<div class="itin_list"><i class="fa fa-directions"></i>' + steps["maneuver"]["instruction"] + '</div>');
-
-			
-			
+			console.log(steps);
+			$('#itindata').append('<div class="directions-mode-separator"><div class="directions-mode-line"></div><div class="directions-mode-distance-time"> ' + Math.trunc(steps["distance"]) + '&nbsp;m</div></div>' +
+			'<div class="itin_list"><i class="fa fa-directions" '+ ((steps["maneuver"]["modifier"]=="left")?'style=" transform: scaleX(-1);"':'')+'></i> ' + steps["maneuver"]["instruction"] + '</div>');
+			//on rajoute 3 petits pointilé pour chaque step
+			$('#pointilé').append('<i class="fas fa-circle fa-liaison-itineraire"></i>');
+			$('#pointilé').append('<i class="fas fa-circle fa-liaison-itineraire"></i>');
+			$('#pointilé').append('<i class="fas fa-circle fa-liaison-itineraire"></i>');
 		});
-		
-		
+
 		/*
 		var autonomieRestanteKm = autonomie_voiture - legs["distance"];
 		//var autonomieRestantePer100  = Math.trunc(autonomieRestanteKm * 100)/autonomie_voiture));
@@ -369,18 +343,14 @@ function displayItineraire(itineraire)
 		var tempsRechargement;
 		*/
 
-		$('#itinbloc').append('ICI ON INDIQUE LE TEMPS DE RECHARGEMENT !');
-		
-		
-		
-		
-	});
-	
-		
-	$(".first_div .fa-map-marker-alt").html($("#end_geocoder").val());
-	$(".first_div .fa-circle").html($("#start_geocoder").val());
+		$('#itindata').append('ICI ON INDIQUE LE TEMPS DE RECHARGEMENT !');
 
-	
+	});
+
+	$(".first_div .fa_arrive").html('&nbsp'+$("#end_geocoder").val());
+	$(".first_div .fa_depart").html('&nbsp'+$("#start_geocoder").val());
+	$('<div class="divider"></div>').insertAfter($("#itinbloc"));
+	$("#itinbloc").show();
 }
 
 

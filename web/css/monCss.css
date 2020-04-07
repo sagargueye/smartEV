@@ -16,6 +16,9 @@
     color: #ffffff82;
     display: block!important;
 }
+.first_div .fas,.first_div .fa {
+    /*color: #f9a608;*/
+}
 .bande_maps{
     height: 80px;
     padding-top: 20px;
