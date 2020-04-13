@@ -95,7 +95,6 @@ $(document).ready(function () {
 		return false;
 	});
 
-	$("#currentAutonomy").inputmask('integer',{min:1, max:100});
 });
 
 function searchItineraire(){
