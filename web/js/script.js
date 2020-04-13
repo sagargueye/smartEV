@@ -1,6 +1,11 @@
-
-
-
+// loading: when chargement de la page
+window.onload = function() {
+	// Show full page LoadingOverlay
+	$.LoadingOverlay("show", {
+		image       : "",
+		fontawesome : "fa fa-cog fa-spin fas fa-map-marked-alt"
+	});
+};
 
 var map;
 mapboxgl.accessToken = "pk.eyJ1IjoiY3Zlcmdub24iLCJhIjoiY2s2ajVodGoyMDFvaTNxbGp1eGRqa3ZwbCJ9._FqRqJ8LXtsLYYURGUcydQ";
@@ -16,6 +21,10 @@ var end_longitude;
 var bool;
 
 $(document).ready(function () {
+	setTimeout(function(){
+		$.LoadingOverlay("hide");	// Hide LoadingOverlay after loading page
+	}, 3000);
+
 	map = L.map('map').setView([48.833, 2.333], 7); // LIGNE 14
 	var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
 			attribution: '© OpenStreetMap contributors',
@@ -69,9 +78,34 @@ $(document).ready(function () {
 	});
 
 	$("#itinbloc").hide();
+
+	//defilement des lien internes
+	$('a[href^="#"]').click(function(){
+		var id = $(this).attr("href");
+		var offset = $(id).offset().top;
+		$('html, body').animate({scrollTop: offset}, 'slow');
+		return false;
+	});
+
+	//naviguer vers la carte
+	$("#dropdownMenuButton").click(function(){
+		var id = $("#bande_maps_id");
+		var offset = $(id).offset().top;
+		$('html, body').animate({scrollTop: offset}, 'slow');
+		return false;
+	});
+
+	$("#currentAutonomy").inputmask('integer',{min:1, max:100});
 });
 
 function searchItineraire(){
+// Show full page LoadingOverlay
+	$.LoadingOverlay("show", {
+		image       : "",
+		fontawesome : "fa fa-cog fa-spin fas fa-map-marked-alt"
+	});
+
+	//itinéraire
 	var lat;
 	var lon;
 
@@ -91,6 +125,10 @@ function searchItineraire(){
 		arrayLatLng.push(data[1][0]["lon"]);
 		arrayLatLng.push(data[1][0]["lat"]);
 		get_itineraire(arrayLatLng);
+	}).
+	finally(function() {
+		// Hide LoadingOverlay
+		$.LoadingOverlay("hide");
 	});
 }
 
@@ -126,7 +164,7 @@ function get_itineraire(arrayLatLng){
 			});
 		});
 		
-		var autonomie_voiture = 400000;	
+		var autonomie_voiture = getAutonomieVehicule($("select[id='type_vehicule'] option:selected").val()) ;
 		var boolCheckItineraire = true;
 		data[0]["routes"][0]["legs"].forEach(function(element) {
 			if(autonomie_voiture < element["distance"])
@@ -161,7 +199,7 @@ function draw_itineraire(array_coordinates){
 
 function search_new_itineraire(leg){
 	arrayLatLng.splice(arrayLatLng.length -2, 2);
-	var autonomie_voiture = 400000;
+	var autonomie_voiture = getAutonomieVehicule($("select[id='type_vehicule'] option:selected").val()) ;
 	var distance = 0;
 	var pos = [];
 	var boolGetStep = false;
@@ -325,32 +363,48 @@ function onMapClick(e) {
 function displayItineraire(itineraire){
 	var blocItineraire = document.getElementById("itinbloc");
 	itineraire[0]["routes"][0]["legs"].forEach(function(legs) {
-		legs["steps"].forEach(function(steps) {
+		//on vide l'itinérair av de recharger le nouveau
+			$('#itindata').html('');
+			$('#pointilé').html('');
+
+			//aller gooo
+			legs["steps"].forEach(function(steps) {
 			steps["maneuver"]["instruction"];
-			console.log(steps);
 			$('#itindata').append('<div class="directions-mode-separator"><div class="directions-mode-line"></div><div class="directions-mode-distance-time"> ' + Math.trunc(steps["distance"]) + '&nbsp;m</div></div>' +
 			'<div class="itin_list"><i class="fa fa-directions" '+ ((steps["maneuver"]["modifier"]=="left")?'style=" transform: scaleX(-1);"':'')+'></i> ' + steps["maneuver"]["instruction"] + '</div>');
 			//on rajoute 3 petits pointilé pour chaque step
-			$('#pointilé').append('<i class="fas fa-circle fa-liaison-itineraire"></i>');
-			$('#pointilé').append('<i class="fas fa-circle fa-liaison-itineraire"></i>');
-			$('#pointilé').append('<i class="fas fa-circle fa-liaison-itineraire"></i>');
+			$('#pointilé').append('<i class="fas fa-circle fa-liaison-itineraire"></i><i class="fas fa-circle fa-liaison-itineraire"></i><i class="fas fa-circle fa-liaison-itineraire"></i>');
 		});
 
-		/*
-		var autonomieRestanteKm = autonomie_voiture - legs["distance"];
-		//var autonomieRestantePer100  = Math.trunc(autonomieRestanteKm * 100)/autonomie_voiture));
-		//var chargementNecessaire = 100 - autonomieRestantePer100;
+		var autonomie_voiture=  getAutonomieVehicule($("select[id='type_vehicule'] option:selected").val()) ;
+		var autonomieRestante = autonomie_voiture- legs["distance"];
+		var autonomieRestantePer100  = Math.trunc((autonomieRestante * 100)/autonomie_voiture);
+		var chargementNecessaire = 100 - autonomieRestantePer100;
 		var tempsRechargement;
-		*/
 
-		$('#itindata').append('ICI ON INDIQUE LE TEMPS DE RECHARGEMENT !');
+
+		$('#itindata').append(autonomie_voiture+'Charge restante '+ autonomieRestante+" distance "+legs["distance"]);
 
 	});
 
 	$(".first_div .fa_arrive").html('&nbsp'+$("#end_geocoder").val());
 	$(".first_div .fa_depart").html('&nbsp'+$("#start_geocoder").val());
-	$('<div class="divider"></div>').insertAfter($("#itinbloc"));
+	$('#divider_with_itin').show();
 	$("#itinbloc").show();
 }
 
-
+function getAutonomieVehicule($typeVehicule) {
+	console.log($typeVehicule);
+	$autonomieInitiale=0;
+	switch ($typeVehicule) {
+		case 'Tesla_model_3':
+			$autonomieInitiale=150000;//c'est en metre
+			break;
+		case 'Renault_Zoe':
+			$autonomieInitiale=250000;//c'est en metre
+			break;
+		default:
+			break;
+	}
+	return $autonomieInitiale;
+}

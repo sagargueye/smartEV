@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css" type="text/css">
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css?family=Courgette|Open+Sans&display=swap" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
@@ -31,59 +32,71 @@
     <script type="text/javascript" src="js/leaflet.markercluster-src.js"></script>
     <script type="text/javascript" src="js/openchargemap-france.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 </head>
 
 <body>
     <div class="containerr ">
         <div class="form-row">
             <div class="col">
-                <nav class="navbar navbar-light bg-light navbar-expand-lg" style="background-color: #0b4884 !important; color:wheat;">
-                    <div><a class="navbar-brand" href="#" ><img src="logo2.png" style="height: 50px;"></a></div>
+                <nav class="navbar navbar-light navbar-expand-lg" >
+                    <div><a class="navbar-brand" href="#" ><img src="map-pin-icon-transparent.png" style="height: 50px;"></a></div>
                     <div style="float: right">
                         <ul class="nav">
-                            <li class="nav-item"><a class="nav-link active" href="#service" style="color: wheat;">Nos services</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#apropos" style="color:wheat;">A propos</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#monFooter" style="color: wheat;">Contact</a></li>
+                            <li class="nav-item"><a class="nav-link active" href="#service" >Nos services</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#apropos">A propos</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#monFooter" >Contact</a></li>
                         </ul>
                     </div>
                 </nav>
             </div>
-
             <div class="col" style="float: left; padding: 0.5rem 1rem; text-align: right;margin-right: 10px;margin-top: 8px;" >
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                         <a class="navbar-brand" href="#" ><img src="itineraire_logo.png" style="height: 50px;"></a>
                     </button>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <div style="display: flex;">
-                            <div >
-                                <form class="px-2 py-3 myform" >
-                                    <div class="form-group">
-                                        <label for="exampleDropdownFormEmail1">Adresse de départ</label>
-                                        <input type="text" class="form-control" id="exampleDropdownFormEmail1" placeholder="11 rue des nuls, Paris">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleDropdownFormPassword1">Adresse d'arrivée</label>
-                                        <input type="text" class="form-control" id="exampleDropdownFormPassword1" placeholder="11 rue des geeks, Lyon">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">GO!</button>
-                                </form>
-                                <div class="dropdown-divider" ></div>
-                                <a class="dropdown-item" >Bonne route gros!</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
 
         <div class="bloc_contenu" >
-            <div class="section featured-image">
+          <div class="section featured-image">
                 <div class="section-inner div_img" >
-                    <!-- <img src="bornederecharge.jpg" class="attachment-page-header size-page-header wp-post-image" alt="" >-->
-                    <span id="sl_play" class="sl_command"></span>
+                  <nav class="nav_section">
+                    <section>
+                      <div class="leaf">
+                        <div>  <img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div><img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div>  <img src="map-pin-icon-transparent.jpg" height="75px" width="75px" ></img></div>
+                        <div><img  src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div> <img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div>   <img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></div>
+                        <div><img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></div>
+                      </div>
+                      <div class="leaf leaf1">
+                        <div>  <img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div><img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div>  <img src="map-pin-icon-transparent.jpg" height="75px" width="75px" ></img></div>
+                        <div><img  src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div> <img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div>   <img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></div>
+                        <div><img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></div>
+                      </div>
+                      <div class="leaf leaf2">
+                        <div>  <img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div><img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div><img src="map-pin-icon-transparent.jpg" height="75px" width="75px" ></img></div>
+                        <div><img  src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div><img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></img></div>
+                        <div><img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></div>
+                        <div><img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></div>
+                      </div>
+                      <p> <strong> SmartEv</strong><br>localiseZ des stations de recharge compatibles<br>et obtenez des itinéraires “intelligents”  </p>
+                    </section>
+                  </nav>
+                    <!-- <img src="illustration-car-plug-in-socket.png" width="500" class="attachment-page-header size-page-header wp-post-image" alt="" >-->
+                  <!--
+                  <span id="sl_play" class="sl_command"></span>
                     <span id="sl_pause" class="sl_command"></span>
                     <span id="sl_i1" class="sl_command sl_i"></span>
                     <span id="sl_i2" class="sl_command sl_i"></span>
@@ -116,92 +129,125 @@
 
                         <span id="timeline"></span>
                     </section>
+                    -->
                 </div>
             </div>
 
-            <div class="bande_maps">Maps - Navigation itinéraire </div>
-
-            <div style="display: flex;padding: 5px 5px 5px 0 ;min-height: 600px;" >
-                <div style="width:25%;">
-                    <div  style="display: flex;margin-left: 10px;">
-                        <div style="width:90%;">
-                            <div class="px-2 py-3" >
-                                <div class="form-group">
-                                    <label for="start_geocoder">Adresse de départ <i class="fa fa-map-signs"></i></label>
-                                    <input type="text" class="form-control" id="start_geocoder" placeholder="Entrer l'adresse de départ">
-                                </div>
-                                <div class="form-group">
-                                    <label for="end_geocoder">Adresse d'arrivée <i class="fa fa-map-signs"></i></label>
-                                    <input type="text" class="form-control" id="end_geocoder" placeholder="Entrer l'adresse d'arriver">
-                                </div>
-                                <div class="form-group">
-                                    <label for="type_vehicule">Type de véhicule <i class="fa fa-car"></i></label>
-                                    <select class="form-control" id="type_vehicule">
-                                        <option>Tesla model 3</option>
-                                        <option>RenaultZoe</option>
-                                    </select>
-                                </div>
-                                <button id="rechercheItin"  class="btn btn-primary" onclick="searchItineraire()">GO!</button>
-                            </div>
-                        </div>
-                        <div style="padding-top: 30%; padding-right: 5px;width:10%;">
-                            <div >
-                                <a id="echange" class="link" >
-                                    <i class="fa fa-long-arrow-alt-up"></i>
-                                    <i class="fa fa-long-arrow-alt-down"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="divider"></div>
-
-                    <div id="itinbloc" class="first_div">
-                        <div> <i class="far fa-circle fa_depart"> 139 rue des salengro</i></div>
-                        <div style="display: flex" >
-                          <div id="pointilé" style="width:5%;">
+          <div class="bande_maps" id="bande_maps_id">Maps - Navigation itinéraire </div>
+          <div style="display: flex;padding: 5px 5px 5px 0 ;min-height: 600px; background-color: #0b4884" >
+              <div style="width:25%;">
+                  <div  style="display: flex;margin-left: 10px;">
+                      <div style="width:90%;">
+                          <div class="px-2 py-3" >
+                              <div class="form-group">
+                                  <label for="start_geocoder">Adresse de départ <i class="fa fa-map-signs"></i></label>
+                                  <input type="text" class="form-control" id="start_geocoder" placeholder="Entrer l'adresse de départ">
+                              </div>
+                              <div class="form-group">
+                                  <label for="end_geocoder">Adresse d'arrivée <i class="fa fa-map-signs"></i></label>
+                                  <input type="text" class="form-control" id="end_geocoder" placeholder="Entrer l'adresse d'arriver">
+                              </div>
+                              <div class="form-group">
+                                  <label for="type_vehicule">Type de véhicule <i class="fa fa-car"></i></label>
+                                  <select class="form-control" id="type_vehicule">
+                                      <option  autonomie="150" value="Tesla_model_3">Tesla model 3</option>
+                                      <option autonomie="250" value="Renault_Zoe">Renault Zoe</option>
+                                  </select>
+                              </div>
+                              <div class="form-group">
+                                <label for="currentAutonomy">Autonomie actuelle (en pourcentage) <i class="fa fa-map-signs"></i></label>
+                                <input type="number" class="form-control" id="currentAutonomy" placeholder="Exemple: 75"/>                              </div>
+                              <button id="rechercheItin"  class="btn btn-primary" onclick="searchItineraire()">GO!</button>
                           </div>
-                          <div  id="itindata" style="width:95%;"> </div>
-                        </div>
-                        <div> <i class="fas fa-map-marker-alt fa_arrive"> 11 avenue des champs</i></div>
-                    </div>
+                      </div>
+                      <div style="padding-top: 30%; padding-right: 5px;width:10%;">
+                          <div >
+                              <a id="echange" class="link" >
+                                  <i class="fa fa-long-arrow-alt-up"></i>
+                                  <i class="fa fa-long-arrow-alt-down"></i>
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="divider"></div>
 
-                    <a class="dropdown-item" >Bonne route gros!</a>
-                </div>
-                <div id="map" style="width:75%;"></div>
-            </div>
-            <div class="section text-body standard_page general-content">
-                <div class="section-inner" style="padding-top: 10px; ">
-                    <h3 id="service">Services</h3>
-                    <div style="display: flex;">
-                        <div  class="col-sm-3 my-auto" >
-                            <img src="borneservice.png" style="width: 90% ; height: 90%;">
-                        </div>
-                        <div style="padding-left:10px" class="col-sm-9 my-auto">
-                            <p>Electric vehicles (EVs) are set to play an important role in improving our air quality, with both UK Government and Scottish Government stating that by 2040 and 2032 respectively, all new cars and vans must be zero emission. Our local electricity networks will need to evolve and change to cope with the growing trend towards electrification of both transport and heat. These changes will include traditional upgrading of networks, but also a new and increasingly viable range of smart and market-based solutions.</p>
-                            <p>The Smart EV project is funded by Scottish and Southern Energy Networks through its Network Innovation Allowance and delivered by EA Technology. It is a follow-on project to My Electric Avenue. The evidence from <a href="http://myelectricavenue.info/">My Electric Avenue</a> shows that electric vehicles (EVs) will cause an impact on the local electricity network, requiring significant investment by Distribution Network Operators (DNOs). My Electric Avenue also demonstrated that demand-side response solutions can work, and can work sympathetically with the network, EVs and people.</p>
-                        </div>
+                  <div id="itinbloc" class="first_div">
+                      <div> <i class="far fa-circle fa_depart"> 139 rue des salengro</i></div>
+                      <div style="display: flex" >
+                        <div id="pointilé" style="width:5%;"> </div>
+                        <div  id="itindata" style="width:95%;"> </div>
+                      </div>
+                      <div> <i class="fa fas fa-map-marker-alt "></i><i class="fa far fa_arrive" >11 avenue des champs</i></div>
+                  </div>
+                  <div class="divider" id="divider_with_itin" style="display: none"></div>
+                  <a class="dropdown-item" >Bonne route gros!</a>
+              </div>
+              <div id="map" style="width:75%;"></div>
+          </div>
+          <div class="section text-body standard_page general-content">
+              <div class="section-inner" style="padding-top: 1px; ">
+                <div class="bande_maps bande_service" id="service">Nos services </div>
+                <div style="display: flex;">
+                    <div  class="col-sm-3 my-auto" >
+                        <img src="borneservice.png" style="width: 90% ;">
                     </div>
-                    <h3 id="apropos" style="">A propos</h3>
-                    <div style="display: flex;">
-                        <div  class="col-sm-3 my-auto" >
-                            <img src="aboutUs.jpg" style="width: 90% ; height: 90%;">
-                        </div>
-                        <div style="padding-left:10px" class="col-sm-9 my-auto">
-                            <p>Nous sommes deux étudiants en premiere année de formation en école d'ingénieur.
-                                Nous sommes spécialisés dans le developpement informatique et réseaux de communication.
-                            </p>
-                            <p>Dans le cadre de notre cours de web, nous sommes amener à réaliser un projet qui a pour objectif de
-                                mettre en application nos connaissances et compétences en technologies et langages du Web
-                                pour concevoir cette application, SmartEV.
-                                SmartEV est une solution qui permet à n’importe quel possesseur de véhicule électrique de localiser des stations de recharge
-                                compatibles, et d’obtenir des itinéraires “intelligents”.
-                            </p>
-                        </div>
+                    <div style="padding-left:10px" class="col-sm-9 my-auto">
+                      <h3 style="color: #777;">
+                        <strong>Avoir un véhicule électrique c’est bien, avoir une borne de recharge, c’est mieux</strong>
+                      </h3>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!--FOOTER-->
+                <div style="display: flex;">
+                    <div  class="col-sm-6 my-auto" >
+                      <h3><strong>Contexte</strong></h3>
+                      <p>A partir de la fin des années 2000, sous la pression de l’augmentation du prix du pétrole, des préoccupations
+                        environnementales grandissantes, et grâce aux progrès techniques, les constructeurs automobiles
+                        ont commencé 1 à produire des véhicules électriques (Tesla Roadster en 2008, Renault Zoe en 2012…). En
+                        France, après le Grenelle de l’Environnement en 2007, le Gouvernement français a fait du développement des
+                        véhicules « décarbonés » (véhicules rechargeables 100% électriques (VE) ou hybrides rechargeables (VHR))
+                        une priorité importante de sa politique environnementale et énergétique.</p>
+                      <p>Dans les années 2010, on assiste ainsi à une croissance du nombre d’immatriculations de véhicules électriques
+                        ; mais cette croissance est freinée par la “peur de la panne sèche” et le manque d’informations
+                        concernant les infrastructures de recharge publiques 2. Depuis, diverses solutions ont été apportées, soit de
+                        la part des constructeurs (Tesla Trip Planner, application Renault My ZE) soit indépendantes et collaboratives
+                        (chargemap.com). Le problème est qu’aucune de ces solutions n’est vraiment complète : les solutions
+                        constructeurs sont limitées aux véhicules et / ou bornes de recharge de la marque, et les référentiels de bornes
+                        de recharge se limitent au rôle d’annuaire et ne proposent pas d’outil plus complexe comme un calculateur
+                        d’itinéraire “intelligent”, indiquant les étapes de recharge nécessaires.
+                      </p>
+                    </div>
+                    <div class="col-sm-6 my-auto">
+                      <h3><strong>Les bornes de recharche</strong></h3>
+                      <h4><em>localiser des stations de recharge compatibles</em></h4>
+                      <p>Nous savons que la recharge se fait principalement au domicile ou sur le lieu de travail, Mais une panne sèche peut intervenir à tout moment. Ne vous inquiétez pas, cette application est là pour vous aider à detecter la plus proche station de recharche sur votre itinéraire.</p>
+                      <p> A l'aide du formulaire, saisissez votre adresse de depart, votre destination, le modèle et la charge restante de votre véhicule. L'application vous générera l'itinéraire qu'il faut prendre et sur quelle station s'arretée pour recharcher votre véhicule. Elle vous indiquera aussi le temps de recharche</p>
+                      <h3><strong>Itinéraire</strong></h3>
+                      <h4><em>Obtenir des itinéraires “intelligents”</em></h4>
+                      <p>Un utilisateur de véhicule électrique peut invoquer son droit à la prise pour installer une borne de recharge individuelle dans un parking d’un immeuble construit avant le 1<sup>er</sup> juillet 2012.</p>
+                      <p>l'itinéraire proposée est calculée en focntion des informations que vous avez saisies. </p>
+                    </div>
+                </div>
+                <div class="bande_maps bande_aboutus" id="apropos">A propos </div>
+                <div style="display: flex;">
+                    <div  class="col-sm-3 my-auto" >
+                        <img src="aboutUs.jpg" style="width: 90% ;">
+                    </div>
+                    <div style="padding-left:10px" class="col-sm-9 my-auto">
+                        <p>Nous sommes deux étudiants en premiere année de formation d'ingénieur.
+                            Nous sommes spécialisés dans le developpement informatique et réseaux de communication.
+                        </p>
+                        <p>Dans le cadre de notre cours de web, nous sommes amener à réaliser un projet qui a pour objectif de
+                              mettre en application nos connaissances et compétences en technologies et langages du Web
+                              pour concevoir cette application, SmartEV.
+                              SmartEV est une solution qui permet à n’importe quel possesseur de véhicule électrique de localiser des stations de recharge
+                              compatibles, et d’obtenir des itinéraires “intelligents”.
+                          </p>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>
+      <!--FOOTER-->
         <footer id="monFooter" class="page-footer font-small cyan darken-3 " style="background-color:#070b48;color:wheat;">
             <div class="container">
                 <div class="row">
@@ -219,7 +265,7 @@
                             <a class="li-ic" target="_blank" href="https://www.linkedin.com/in/sagar-gueye-94b383141" style="color:wheat;">
                                 <i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
                             </a>
-                            <a class="ins-ic" target="_blank" href="https://www.cpe.fr/" style="color:wheat;">
+                            <a class="ins-ic" target="_blank" href="https://www.instagram.com/sagar_gueye/" style="color:wheat;">
                                 <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
                             </a>
                         </div>
@@ -230,7 +276,7 @@
                 <a href="#"> SmartEV.com</a>
             </div>
         </footer>
-        <!-- END Footer -->
+      <!-- END Footer -->
     </div>
 
 </body>
