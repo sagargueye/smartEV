@@ -1,8 +1,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8"/>
-
-
+    <title>SmartEv</title>
+    <link rel="shortcut icon" href="map-pin-icon-transparent.png" />
     <link rel="stylesheet" href="css/monCss.css" type="text/css">
     <link rel="stylesheet" href="css/overlay.css" type="text/css">
     <link rel="stylesheet" href="css/bootstrap.css" />
@@ -31,6 +31,7 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
     <script type="text/javascript" src="js/leaflet.markercluster-src.js"></script>
     <script type="text/javascript" src="js/openchargemap-france.js"></script>
+	  <script type="text/javascript" src="js/voiture.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 </head>
@@ -150,8 +151,8 @@
                               <div class="form-group">
                                   <label for="type_vehicule">Type de véhicule <i class="fa fa-car"></i></label>
                                   <select class="form-control" id="type_vehicule">
-                                      <option  autonomie="150" value="Tesla_model_3">Tesla model 3</option>
-                                      <option autonomie="250" value="Renault_Zoe">Renault Zoe</option>
+									                  <option value="0">Tesla model 3</option>
+                                    <option value="1">RenaultZoe</option>
                                   </select>
                               </div>
                               <button id="rechercheItin"  class="btn btn-primary" onclick="searchItineraire()">GO!</button>
@@ -169,7 +170,11 @@
                   <div class="divider"></div>
                   <div id="itinbloc" class="first_div">
                       <div> <i class="far fa-circle fa_depart"> 139 rue des salengro</i></div>
-                      <div style="display: flex" >
+                      <div class="divinfoInit" >
+                        <i class="fas fa-info-circle faInfo"><span id="info_dure_distance" style="color:#79797a" > 41 min (14,0 km) </span></i>
+                        <i class="fas fa-charging-station faInfo"><span id="info_station_recharge" style="color:#79797a"> 3 arrêts de recharche sont nécessaires</span></i>
+                      </div>
+                      <div style="display: flex;overflow-y: scroll;overflow-x: hidden;height: 300px;padding-top: 10px;margin-bottom: 10px;" >
                         <div id="pointilé" style="width:5%;"> </div>
                         <div  id="itindata" style="width:95%;"> </div>
                       </div>

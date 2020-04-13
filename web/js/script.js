@@ -15,7 +15,9 @@ var token_locationiq = "07076b95eec962";
 var token_here = "tVIwsP4pVf0zkKgUYV0XKFpI3hdOSJ_yJkTb4Ls_Tec";
 var num_click;
 var arrayLatLng = [];
-
+var puissanceVoiture;
+var autonomieVoiture;
+var puissanceMaximaleVoiture;
 var end_latitude;
 var end_longitude;
 var bool;
@@ -95,6 +97,13 @@ $(document).ready(function () {
 		return false;
 	});
 
+	document.getElementById("type_vehicule").addEventListener("change", function() {
+		var jsonVoiture = voiture[this.options[this.selectedIndex].value];
+		autonomieVoiture = jsonVoiture["autonomie"];
+		capaciteVoiture = jsonVoiture["puissance"];
+		puissanceMaximaleVoiture = jsonVoiture["puissanceMaximale"];
+	});
+
 });
 
 function searchItineraire(){
@@ -163,10 +172,10 @@ function get_itineraire(arrayLatLng){
 			});
 		});
 		
-		var autonomie_voiture = getAutonomieVehicule($("select[id='type_vehicule'] option:selected").val()) ;
+		//var autonomieVoiture = getAutonomieVehicule($("select[id='type_vehicule'] option:selected").val()) ;
 		var boolCheckItineraire = true;
 		data[0]["routes"][0]["legs"].forEach(function(element) {
-			if(autonomie_voiture < element["distance"])
+			if(autonomieVoiture < element["distance"])
 			{
 				search_new_itineraire(element);
 				boolCheckItineraire = false;
@@ -198,14 +207,13 @@ function draw_itineraire(array_coordinates){
 
 function search_new_itineraire(leg){
 	arrayLatLng.splice(arrayLatLng.length -2, 2);
-	var autonomie_voiture = getAutonomieVehicule($("select[id='type_vehicule'] option:selected").val()) ;
 	var distance = 0;
 	var pos = [];
 	var boolGetStep = false;
 	leg["steps"].some(function(element, index) {
 		if(!boolGetStep)
 		{
-			if((distance + element["distance"]) < 0.5*autonomie_voiture)
+			if((distance + element["distance"]) < 0.5*autonomieVoiture)
 			{
 				distance = distance + element["distance"];
 			}
@@ -215,15 +223,15 @@ function search_new_itineraire(leg){
 				var nbPositionInStep = Math.trunc(element["geometry"]["coordinates"].length);
 				var distancePositionInStep = Math.trunc(distanceStep/nbPositionInStep);
 				var index = 0;
-				while(distance + distancePositionInStep < distanceStep && distance + distancePositionInStep < 0.8*autonomie_voiture)
+				while(distance + distancePositionInStep < distanceStep && distance + distancePositionInStep < 0.8*autonomieVoiture)
 				{
-					if(distance > 0.5*autonomie_voiture && element["geometry"]["coordinates"][index] != undefined)
+					if(distance > 0.5*autonomieVoiture && element["geometry"]["coordinates"][index] != undefined)
 						pos.push(element["geometry"]["coordinates"][index]);
 					index++;
 					distance = distance + distancePositionInStep;	
 				}
 				
-				if(distance + distancePositionInStep > 0.8*autonomie_voiture)
+				if(distance + distancePositionInStep > 0.8*autonomieVoiture)
 					return true;
 				boolGetStep = true;
 
@@ -231,7 +239,7 @@ function search_new_itineraire(leg){
 		}
 		else
 		{
-			if(distance + element["distance"] < 0.8*autonomie_voiture)
+			if(distance + element["distance"] < 0.8*autonomieVoiture)
 			{
 				element["geometry"]["coordinates"].forEach(function(element) {
 					if(element != undefined)
@@ -246,7 +254,7 @@ function search_new_itineraire(leg){
 				var nbPositionInStep = Math.trunc(element["geometry"]["coordinates"].length);
 				var distancePositionInStep = Math.trunc(distanceStep/nbPositionInStep);
 				var index = 0;
-				while(distance + distancePositionInStep < 0.8*autonomie_voiture)
+				while(distance + distancePositionInStep < 0.8*autonomieVoiture)
 				{
 					if(element["geometry"]["coordinates"][index] != undefined)
 						pos.push(element["geometry"]["coordinates"][index]);
@@ -286,7 +294,6 @@ function search_new_itineraire(leg){
 	arrayLatLng.push(end_longitude);
 	arrayLatLng.push(end_latitude);
 	get_itineraire(arrayLatLng);
-	//get_itineraire(positionNearestStation[0], positionNearestStation[1], end_longitude, end_latitude);
 }
 
 function getDistance(lat1,lon1,lat2,lon2) {
@@ -360,14 +367,15 @@ function onMapClick(e) {
 }
 
 function displayItineraire(itineraire){
+	puissanceStation = 40;
 	var blocItineraire = document.getElementById("itinbloc");
-	itineraire[0]["routes"][0]["legs"].forEach(function(legs) {
-		//on vide l'itinérair av de recharger le nouveau
-			$('#itindata').html('');
-			$('#pointilé').html('');
+	//on vide l'itinérair av de recharger le nouveau
+	$('#itindata').html('');
+	$('#pointilé').html('');
+	
+	itineraire[0]["routes"][0]["legs"].forEach(function(legs, index) {
 
-			//aller gooo
-			legs["steps"].forEach(function(steps) {
+		legs["steps"].forEach(function(steps) {
 			steps["maneuver"]["instruction"];
 			$('#itindata').append('<div class="directions-mode-separator"><div class="directions-mode-line"></div><div class="directions-mode-distance-time"> ' + Math.trunc(steps["distance"]) + '&nbsp;m</div></div>' +
 			'<div class="itin_list"><i class="fa fa-directions" '+ ((steps["maneuver"]["modifier"]=="left")?'style=" transform: scaleX(-1);"':'')+'></i> ' + steps["maneuver"]["instruction"] + '</div>');
@@ -375,14 +383,14 @@ function displayItineraire(itineraire){
 			$('#pointilé').append('<i class="fas fa-circle fa-liaison-itineraire"></i><i class="fas fa-circle fa-liaison-itineraire"></i><i class="fas fa-circle fa-liaison-itineraire"></i>');
 		});
 
-		var autonomie_voiture=  getAutonomieVehicule($("select[id='type_vehicule'] option:selected").val()) ;
-		var autonomieRestante = autonomie_voiture- legs["distance"];
-		var autonomieRestantePer100  = Math.trunc((autonomieRestante * 100)/autonomie_voiture);
-		var chargementNecessaire = 100 - autonomieRestantePer100;
-		var tempsRechargement;
+		console.log(index);
+		if(index + 1 != (itineraire[0]["routes"][0]["legs"]).length)
+		{
+			var autonomieRestanteKm = autonomieVoiture - legs["distance"];
+			puissanceVoiture  = Math.trunc((autonomieRestanteKm * 100)/autonomieVoiture);
+			$('#itindata').append("Temps de rechargement : " + getTempsRechargement() + " minutes");
+		}
 
-
-		$('#itindata').append(autonomie_voiture+'Charge restante '+ autonomieRestante+" distance "+legs["distance"]);
 
 	});
 
@@ -392,18 +400,78 @@ function displayItineraire(itineraire){
 	$("#itinbloc").show();
 }
 
-function getAutonomieVehicule($typeVehicule) {
-	console.log($typeVehicule);
-	$autonomieInitiale=0;
-	switch ($typeVehicule) {
-		case 'Tesla_model_3':
-			$autonomieInitiale=150000;//c'est en metre
-			break;
-		case 'Renault_Zoe':
-			$autonomieInitiale=250000;//c'est en metre
-			break;
-		default:
-			break;
+function getPalierByPuissance(puissance)
+{
+	if(puissance > 40)
+		return 75;
+	else if(35 <= puissance < 40)
+		return 81;
+	else if(30 <= puissance < 35)
+		return 83;
+	else if(25 <= puissance < 30)
+		return 85;
+	else if(20 <= puissance < 25)
+		return 88;
+	else if(15 <= puissance < 20)
+		return 92;
+	else if(10 <= puissance < 15)
+		return 95;
+	else
+		return 98;	
+}
+
+function getTempsRechargement()
+{
+	var tempsRechargement = 0;
+	
+	if(puissanceStation > puissanceMaximaleVoiture)
+		puissanceStation = puissanceMaximaleVoiture;
+	
+	var palier = getPalierByPuissance(puissanceStation);
+	if(puissanceVoiture < palier)
+	{
+		tempsRechargement = tempsRechargement + 60*((palier - puissanceVoiture)/100)*(capaciteVoiture/puissanceStation);
+		puissanceVoiture = palier;
 	}
-	return $autonomieInitiale;
+
+	
+	palier = getPalierByPuissance(0.75*puissanceStation);
+	if(puissanceVoiture < palier)
+	{
+		tempsRechargement = tempsRechargement + 60*((((palier + 100)/2)-palier)/100)*(capaciteVoiture/(0.75*puissanceStation));
+		puissanceVoiture = palier;
+
+	} 
+	else if(puissanceVoiture < (palier + 100)/2)
+	{
+		tempsRechargement = tempsRechargement + 60*((((palier + 100)/2)-puissanceVoiture)/100)*(capaciteVoiture/(0.75*puissanceStation));
+		puissanceVoiture = palier;
+	}
+	
+	
+	palier = getPalierByPuissance(0.5*puissanceStation);
+	if(puissanceVoiture < (palier + 100)/2)
+	{
+		tempsRechargement = tempsRechargement + 60 * ((((palier + 500)/6) - ((palier + 100)/2))/100)*(capaciteVoiture/(0.5 * puissanceStation));
+		puissanceVoiture = palier;
+	} 
+	else if(puissanceVoiture < (palier + 500)/6)
+	{
+		tempsRechargement = tempsRechargement + 60 * ((((palier + 500)/6) - puissanceVoiture)/100) * (capaciteVoiture/(0.5 * puissanceStation));
+		puissanceVoiture = palier;
+	}
+
+	
+	palier = getPalierByPuissance(0.25*puissanceStation);
+	if(puissanceVoiture < (palier + 500)/6)
+	{
+		tempsRechargement = tempsRechargement + 60*((100 - ((palier+ 500)/6))/100)*(capaciteVoiture/(0.25*puissanceStation));
+		puissanceVoiture = palier;
+	} 
+	else if(puissanceVoiture < (palier + 100)/2)
+	{
+		tempsRechargement = tempsRechargement = 60 * ((100 - palier)/100) * (capaciteVoiture/(0.25 * puissanceStation));
+		puissanceVoiture = palier;
+	}
+	return Math.trunc(tempsRechargement);
 }
