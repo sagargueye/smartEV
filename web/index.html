@@ -92,7 +92,7 @@
                         <div><img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></div>
                         <div><img src="map-pin-icon-transparent.jpg" height="75px" width="75px"></div>
                       </div>
-                      <p> <strong> SmartEv</strong><br>localiseZ des stations de recharge compatibles<br>et obtenez des itinéraires “intelligents”  </p>
+                      <p> <strong> SmartEv</strong><br>localisez des stations de recharge compatibles<br>et obtenez des itinéraires “intelligents”  </p>
                     </section>
                   </nav>
                     <!-- <img src="illustration-car-plug-in-socket.png" width="500" class="attachment-page-header size-page-header wp-post-image" alt="" >-->
@@ -169,15 +169,20 @@
                   </div>
                   <div class="divider"></div>
                   <div id="itinbloc" class="first_div">
-                      <div> <i class="far fa-circle fa_depart"> 139 rue des salengro</i></div>
-                      <div class="divinfoInit" >
-                        <i class="fas fa-info-circle faInfo"><span id="info_dure_distance" style="color:#79797a" > 41 min (14,0 km) </span></i>
-                        <i class="fas fa-charging-station faInfo"><span id="info_station_recharge" style="color:#79797a"> 3 arrêts de recharche sont nécessaires</span></i>
-                      </div>
-                      <div style="display: flex;overflow-y: scroll;overflow-x: hidden;height: 300px;padding-top: 10px;margin-bottom: 10px;" >
+                    <div class="divinfoInit" >
+                      <i class="fas fa-info-circle faInfo"><span id="info_dure_distance" style="color:#79797a" > 41 min (14,0 km) </span></i>
+                      <i class="fas fa-charging-station faInfo"><span id="info_station_recharge" style="color:#79797a"> 3 arrêts de recharche sont nécessaires</span></i>
+                    </div>
+                    <div> <i class="far fa-circle fa_depart"> 139 rue des salengro</i></div>
+                      <div style="display: flex;max-height: 300px;padding-top: 10px;margin-bottom: 10px;" >
                         <div id="pointilé" style="width:5%;"> </div>
                         <div  id="itindata" style="width:95%;"> </div>
                       </div>
+                    <!--
+                      <div style="overflow-y: scroll;overflow-x: hidden;height: 300px;padding-top: 10px;margin-bottom: 10px;" >
+                        <div  id="itindata" style=""> </div>
+                      </div>
+                    -->
                       <div> <i class="fa fas fa-map-marker-alt "></i><i class="fa far fa_arrive" >11 avenue des champs</i></div>
                   </div>
                   <div class="divider" id="divider_with_itin" style="display: none"></div>
@@ -220,12 +225,15 @@
                     <div class="col-sm-6 my-auto">
                       <h3><strong>Les bornes de recharche</strong></h3>
                       <h4><em>localiser des stations de recharge compatibles</em></h4>
-                      <p>Nous savons que la recharge se fait principalement au domicile ou sur le lieu de travail, Mais une panne sèche peut intervenir à tout moment. Ne vous inquiétez pas, cette application est là pour vous aider à detecter la plus proche station de recharche sur votre itinéraire.</p>
-                      <p> A l'aide du formulaire, saisissez votre adresse de depart, votre destination, le modèle et la charge restante de votre véhicule. L'application vous générera l'itinéraire qu'il faut prendre et sur quelle station s'arretée pour recharcher votre véhicule. Elle vous indiquera aussi le temps de recharche</p>
+                      <p>Nous savons que la recharge se fait principalement au domicile ou sur le lieu de travail, Mais une panne sèche peut survenir à tout moment. Ne vous inquiétez pas, cette application est là pour vous aider à detecter la plus proche station de recharche sur votre itinéraire.</p>
+                      <p> A l'aide du formulaire, saisissez votre adresse de depart, votre destination, le modèle et la charge restante de votre véhicule. L'application vous générera l'itinéraire et les stations pour recharcher votre véhicule. Elle vous indiquera aussi le temps de recharche</p>
                       <h3><strong>Itinéraire</strong></h3>
                       <h4><em>Obtenir des itinéraires “intelligents”</em></h4>
-                      <p>Un utilisateur de véhicule électrique peut invoquer son droit à la prise pour installer une borne de recharge individuelle dans un parking d’un immeuble construit avant le 1<sup>er</sup> juillet 2012.</p>
-                      <p>l'itinéraire proposée est calculée en focntion des informations que vous avez saisies. </p>
+                      <p>SmartEv est un service en ligne de cartographie et de calcul d'itinéraire.
+                        l'itinéraire proposée est calculée en fonction des informations que vous avez saisies. </p>
+                      <p>Cet outil est notamment doté d'une fonction essentielle :
+                        Une aide aux déplacements via la recherche d'itinéraires, qui sert à comparer les déplacements possibles en fonction
+                        du modes de transports (voiture) et ceci sur tout le territoire français.</p>
                     </div>
                 </div>
                 <div class="bande_maps bande_aboutus" id="apropos">A propos </div>

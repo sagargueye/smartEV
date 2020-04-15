@@ -1,10 +1,10 @@
 // loading: when chargement de la page
 window.onload = function() {
 	// Show full page LoadingOverlay
-	$.LoadingOverlay("show", {
+	/* $.LoadingOverlay("show", {
 		image       : "",
 		fontawesome : "fa fa-cog fa-spin fas fa-map-marked-alt"
-	});
+	});*/
 };
 
 var map;
@@ -377,27 +377,36 @@ function displayItineraire(itineraire){
 
 		legs["steps"].forEach(function(steps) {
 			steps["maneuver"]["instruction"];
-			$('#itindata').append('<div class="directions-mode-separator"><div class="directions-mode-line"></div><div class="directions-mode-distance-time"> ' + Math.trunc(steps["distance"]) + '&nbsp;m</div></div>' +
-			'<div class="itin_list"><i class="fa fa-directions" '+ ((steps["maneuver"]["modifier"]=="left")?'style=" transform: scaleX(-1);"':'')+'></i> ' + steps["maneuver"]["instruction"] + '</div>');
-			//on rajoute 3 petits pointilé pour chaque step
-			$('#pointilé').append('<i class="fas fa-circle fa-liaison-itineraire"></i><i class="fas fa-circle fa-liaison-itineraire"></i><i class="fas fa-circle fa-liaison-itineraire"></i>');
+			$('#itindata').append('' +
+				'<div class="directions-mode-separator">' +
+					'<div class="directions-mode-line"></div>' +
+					'<div class="directions-mode-distance-time">' + Math.trunc(steps["distance"]) + '&nbsp;m</div>' +
+				'</div>' +
+				'<div class="itin_list">' +
+					'<i class="fa fa-directions" '+ ((steps["maneuver"]["modifier"]=="left")?'style=" transform: scaleX(-1);"':'')+'></i> ' + steps["maneuver"]["instruction"] +
+				'</div>'
+			);
 		});
 
 		console.log(index);
-		if(index + 1 != (itineraire[0]["routes"][0]["legs"]).length)
-		{
+		if(index + 1 != (itineraire[0]["routes"][0]["legs"]).length){
 			var autonomieRestanteKm = autonomieVoiture - legs["distance"];
 			puissanceVoiture  = Math.trunc((autonomieRestanteKm * 100)/autonomieVoiture);
-			$('#itindata').append("Temps de rechargement : " + getTempsRechargement() + " minutes");
+			$('#itindata').append('<div><i class="fas fa-charging-station faInfo"></i> <span id="info_station_recharge" > Temps de rechargement: ' + getTempsRechargement() + ' min</span></div>')
 		}
-
-
 	});
 
 	$(".first_div .fa_arrive").html('&nbsp'+$("#end_geocoder").val());
 	$(".first_div .fa_depart").html('&nbsp'+$("#start_geocoder").val());
 	$('#divider_with_itin').show();
 	$("#itinbloc").show();
+
+	//on rajoute les petits pointilé pour chaque step
+	var heigh=parseInt( $("#itindata").css("height"));
+	for(var i=0;i<heigh; i=i+(heigh/20)){
+		$('#pointilé').append('<i class="fas fa-circle fa-liaison-itineraire" style="margin-bottom : 10px"></i>');
+	}
+
 }
 
 function getPalierByPuissance(puissance)

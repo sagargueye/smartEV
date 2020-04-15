@@ -51,13 +51,28 @@
 }
 .divinfoInit{
     background-color: #fff;
-    margin: 0px 50px 9px 12px;
+    margin: 0px 30px 20px 30px;
     padding-top: 15px;
     border-radius: 5px;
     color: #79797a;
 }
-
-
+#itindata .faInfo{
+    /*background-color: white;*/
+    padding: 10px;
+    border-radius: 18px;
+    background-color: #ee9b30;
+    margin-left: 20px;
+    color: white;
+}
+#itindata #info_station_recharge {
+    font-size: 14px;
+}
+#itindata{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 300px;
+    padding-top: 10px;
+}
 
 .divider {
     height: 0;
@@ -96,6 +111,10 @@
     font-weight: normal;
     z-index: 1;
     transition: all 200ms;
+}
+
+.fa_depart{
+    margin-bottom: 0px!important;
 }
 
 .btn-secondary{
