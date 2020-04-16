@@ -21,6 +21,9 @@ var puissanceMaximaleVoiture;
 var end_latitude;
 var end_longitude;
 var bool;
+var markerDepart;
+var markerArrivee;
+
 
 $(document).ready(function () {
 	setTimeout(function(){
@@ -33,8 +36,6 @@ $(document).ready(function () {
 			maxZoom: 19
 	});
 
-	var markerDepart;
-	var markerArrivee;
 
 	map.on('click', onMapClick);	
 	num_click = 0;
@@ -156,35 +157,42 @@ function get_itineraire(arrayLatLng){
 		
 	});
 	
-	url1 = "https://api.mapbox.com/directions/v5/mapbox/driving/"+LatLng+"?geometries=geojson&steps=true&access_token=pk.eyJ1IjoiY3Zlcmdub24iLCJhIjoiY2s2ajVodGoyMDFvaTNxbGp1eGRqa3ZwbCJ9._FqRqJ8LXtsLYYURGUcydQ";
+	url1 = "https://api.mapbox.com/directions/v5/mapbox/driving/"+LatLng+"?geometries=geojson&steps=true&language=fr&access_token=pk.eyJ1IjoiY3Zlcmdub24iLCJhIjoiY2s2ajVodGoyMDFvaTNxbGp1eGRqa3ZwbCJ9._FqRqJ8LXtsLYYURGUcydQ";
 	Promise.all([
 			fetch(url1).then(function(res) { return res.json(); })
 	])
 	.then(function(data) {
-		var array_coordinates = [];
-	
-		// Les coordonnées de Latitude/Longitude n'étant pas dans le même ordre dans toutes les API, on les réordonne
-		data[0]["routes"][0]["legs"].forEach(function(element) {
-			element["steps"].forEach(function(steps) {
-				steps["geometry"]["coordinates"].forEach(function(coordinates) {
-					array_coordinates.push([coordinates[1], coordinates[0]]);
+		if(data[0]["routes"][0] != undefined && document.getElementById("type_vehicule").value != 0)
+		{
+			var array_coordinates = [];
+		
+			// Les coordonnées de Latitude/Longitude n'étant pas dans le même ordre dans toutes les API, on les réordonne
+			data[0]["routes"][0]["legs"].forEach(function(element) {
+				element["steps"].forEach(function(steps) {
+					steps["geometry"]["coordinates"].forEach(function(coordinates) {
+						array_coordinates.push([coordinates[1], coordinates[0]]);
+					});
 				});
 			});
-		});
-		
-		//var autonomieVoiture = getAutonomieVehicule($("select[id='type_vehicule'] option:selected").val()) ;
-		var boolCheckItineraire = true;
-		data[0]["routes"][0]["legs"].forEach(function(element) {
-			if(autonomieVoiture < element["distance"])
+			
+			//var autonomieVoiture = getAutonomieVehicule($("select[id='type_vehicule'] option:selected").val()) ;
+			var boolCheckItineraire = true;
+			data[0]["routes"][0]["legs"].forEach(function(element) {
+				if(autonomieVoiture < element["distance"])
+				{
+					search_new_itineraire(element);
+					boolCheckItineraire = false;
+				}
+			});
+			if(boolCheckItineraire == true)
 			{
-				search_new_itineraire(element);
-				boolCheckItineraire = false;
+				draw_itineraire(array_coordinates);
+				displayItineraire(data);
 			}
-		});
-		if(boolCheckItineraire == true)
+		}
+		else
 		{
-			draw_itineraire(array_coordinates);
-			displayItineraire(data);
+			alert("impossible");
 		}
 	});
 }
@@ -354,11 +362,16 @@ function onMapClick(e) {
 		if(num_click == 0)
 		{
 			document.getElementById("start_geocoder").value = adresse;
+			if(markerDepart != undefined)
+				map.removeLayer(markerDepart);
+			markerDepart = L.marker([e.latlng["lat"] , e.latlng["lng"]]).addTo(map);
 		}
 		if(num_click == 1)
 		{
+			if(markerArrivee != undefined)
+				map.removeLayer(markerArrivee);
+			markerArrivee = L.marker([e.latlng["lat"] , e.latlng["lng"]]).addTo(map);
 			document.getElementById("end_geocoder").value = adresse;
-			
 		}
 		num_click++;
 
@@ -368,19 +381,23 @@ function onMapClick(e) {
 
 function displayItineraire(itineraire){
 	puissanceStation = 40;
-	var blocItineraire = document.getElementById("itinbloc");
+	var duration = 0;
 	//on vide l'itinérair av de recharger le nouveau
 	$('#itindata').html('');
 	$('#pointilé').html('');
 	
 	itineraire[0]["routes"][0]["legs"].forEach(function(legs, index) {
-
 		legs["steps"].forEach(function(steps) {
 			steps["maneuver"]["instruction"];
+			var tempDistance;
+			if(Math.trunc(steps["distance"]) >= 1000)
+				tempDistance = Math.trunc(Math.trunc(steps["distance"])/1000) + "," + Math.trunc(steps["distance"]%1000) + " km ";
+			else
+				tempDistance = (steps["distance"]/1000).toFixed(2) + "m";
 			$('#itindata').append('' +
 				'<div class="directions-mode-separator">' +
 					'<div class="directions-mode-line"></div>' +
-					'<div class="directions-mode-distance-time">' + Math.trunc(steps["distance"]) + '&nbsp;m</div>' +
+					'<div class="directions-mode-distance-time">' + tempDistance + '</div>' +
 				'</div>' +
 				'<div class="itin_list">' +
 					'<i class="fa fa-directions" '+ ((steps["maneuver"]["modifier"]=="left")?'style=" transform: scaleX(-1);"':'')+'></i> ' + steps["maneuver"]["instruction"] +
@@ -388,13 +405,41 @@ function displayItineraire(itineraire){
 			);
 		});
 
-		console.log(index);
 		if(index + 1 != (itineraire[0]["routes"][0]["legs"]).length){
 			var autonomieRestanteKm = autonomieVoiture - legs["distance"];
 			puissanceVoiture  = Math.trunc((autonomieRestanteKm * 100)/autonomieVoiture);
-			$('#itindata').append('<div><i class="fas fa-charging-station faInfo"></i> <span id="info_station_recharge" > Temps de rechargement: ' + getTempsRechargement() + ' min</span></div>')
+			var tempTempsRechargement = getTempsRechargement();
+			duration = duration + tempTempsRechargement;
+			console.log(duration);
+			$('#itindata').append('<div><i class="fas fa-charging-station faInfo"></i> <span id="info_station_recharge" > Temps de rechargement: ' + tempTempsRechargement + ' min</span></div>')
 		}
 	});
+
+	var blocItineraire = document.getElementById("itinbloc");
+	
+	
+	var distance = Math.trunc(itineraire[0]["routes"][0]["distance"]/1000).toFixed(2) ;
+	duration = duration + itineraire[0]["routes"][0]["duration"]/60;
+	duration = Math.trunc(duration);
+	
+	
+	if(duration >= 60)
+		duration = Math.trunc(Math.trunc(duration)/60) + "h" + Math.trunc(duration%60);
+	else
+		duration = duration + "mn";
+	document.getElementById("info_dure_distance").innerHTML = " " + distance + " km (" + duration + ")";
+	
+	
+	var nbRechargement = (itineraire[0]["routes"][0]["legs"]).length - 1;
+	
+	if(nbRechargement == 1)
+		document.getElementById("info_station_recharge").innerHTML = " 1 rechargement nécessaire";
+	else if(nbRechargement == 0)
+		document.getElementById("info_station_recharge").innerHTML = " Pas de recharge nécessaire";
+	else
+		document.getElementById("info_station_recharge").innerHTML = " " + nbRechargement + " rechargements nécessaires";		
+
+
 
 	$(".first_div .fa_arrive").html('&nbsp'+$("#end_geocoder").val());
 	$(".first_div .fa_depart").html('&nbsp'+$("#start_geocoder").val());
