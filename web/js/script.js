@@ -36,7 +36,7 @@ $(document).ready(function () {
 
 
 	var iconCharginStation = L.icon({
-		iconUrl: 'charging-station.png',
+		iconUrl: 'images/charging-station.png',
 		iconSize:     [32, 32], // size of the icon
 		popupAnchor:  [-5, -15] // point from which the popup should open relative to the iconAnchor
 	});
@@ -393,12 +393,12 @@ function displayItineraire(itineraire){
 	console.log(itineraire);
 	
 	var iconStep = L.icon({
-		iconUrl: 'dot.png',
+		iconUrl: 'images/dot.png',
 		iconSize:     [15, 15], // size of the icon
 	});
 	
 	var iconEnd = L.icon({
-		iconUrl: 'endItineraire.png',
+		iconUrl: 'images/endItineraire.png',
 		iconSize:     [40, 40], // size of the icon
 	});
 	
