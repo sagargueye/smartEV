@@ -23,6 +23,8 @@ var end_longitude;
 var bool;
 var markerDepart;
 var markerArrivee;
+var polyline;
+var itineraireActive = false;
 
 
 $(document).ready(function () {
@@ -98,13 +100,41 @@ $(document).ready(function () {
 		return false;
 	});
 
+	document.getElementById("type_vehicule").value = 0;
+	document.getElementById("start_geocoder").value = "";
+	document.getElementById("end_geocoder").value = "";
+
 	document.getElementById("type_vehicule").addEventListener("change", function() {
-		var jsonVoiture = voiture[this.options[this.selectedIndex].value];
-		autonomieVoiture = jsonVoiture["autonomie"];
-		capaciteVoiture = jsonVoiture["puissance"];
-		puissanceMaximaleVoiture = jsonVoiture["puissanceMaximale"];
+		var tempVoiture;
+		var tempIndex = this.selectedIndex;
+		voiture.forEach(function(element) {
+			if(element["id"] == tempIndex)
+			{
+				tempVoiture = element;
+				return true;
+			}	
+		});
+		
+		if(tempVoiture != undefined)
+		{
+			autonomieVoiture = tempVoiture["autonomie"];
+			capaciteVoiture = tempVoiture["puissance"];
+			puissanceMaximaleVoiture = tempVoiture["puissanceMaximale"];
+		}
 	});
 
+
+	var greenIcon = L.icon({
+		iconUrl: 'leaf-green.png',
+		shadowUrl: 'leaf-shadow.png',
+
+		iconSize:     [38, 95], // size of the icon
+		shadowSize:   [50, 64], // size of the shadow
+		iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		shadowAnchor: [4, 62],  // the same for the shadow
+		popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+	});
+	L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map);
 });
 
 function searchItineraire(){
@@ -125,6 +155,9 @@ function searchItineraire(){
 			,fetch(url2).then(function(res) { return res.json(); })
 	])
 	.then(function(data) {
+	
+		if(itineraireActive)
+			deleteOldItineraire();
 		start_longitude = data[0][0]["lon"];
 		start_latitude = data[0][0]["lat"];
 		end_longitude =  data[1][0]["lon"];
@@ -164,8 +197,7 @@ function get_itineraire(arrayLatLng){
 	.then(function(data) {
 		if(data[0]["routes"][0] != undefined && document.getElementById("type_vehicule").value != 0)
 		{
-			var array_coordinates = [];
-		
+			var array_coordinates = [];		
 			// Les coordonnées de Latitude/Longitude n'étant pas dans le même ordre dans toutes les API, on les réordonne
 			data[0]["routes"][0]["legs"].forEach(function(element) {
 				element["steps"].forEach(function(steps) {
@@ -175,7 +207,8 @@ function get_itineraire(arrayLatLng){
 				});
 			});
 			
-			//var autonomieVoiture = getAutonomieVehicule($("select[id='type_vehicule'] option:selected").val()) ;
+
+
 			var boolCheckItineraire = true;
 			data[0]["routes"][0]["legs"].forEach(function(element) {
 				if(autonomieVoiture < element["distance"])
@@ -197,9 +230,16 @@ function get_itineraire(arrayLatLng){
 	});
 }
 
+function deleteOldItineraire()
+{
+		polyline.remove(map);
+		arrayLatLng = [];
+}
+
 function draw_itineraire(array_coordinates){
-	var polyline = L.polyline(array_coordinates, {color: 'red'}).addTo(map);
+	polyline = L.polyline(array_coordinates, {color: 'red'}).addTo(map);
 	map.fitBounds(polyline.getBounds());
+	itineraireActive = true;
 }
 
 // Explication rapide de l'algorithme 
@@ -385,6 +425,8 @@ function displayItineraire(itineraire){
 	//on vide l'itinérair av de recharger le nouveau
 	$('#itindata').html('');
 	$('#pointilé').html('');
+	
+	console.log(itineraire);
 	
 	itineraire[0]["routes"][0]["legs"].forEach(function(legs, index) {
 		legs["steps"].forEach(function(steps) {
