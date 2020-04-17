@@ -57,7 +57,6 @@
     color: #79797a;
 }
 #itindata .faInfo{
-    /*background-color: white;*/
     padding: 10px;
     border-radius: 18px;
     background-color: #ee9b30;
@@ -136,7 +135,7 @@
 .containerr{
     margin-left: 8%;
     margin-right: 8% ;
-    background:#9ed192 ;/* #357e20*/
+    background:#9ed192 ;
 }
 .div_img {
     border-radius: 0;
@@ -148,9 +147,6 @@
 }
 .div_img img {
     height:40px;
-}
-.div_img img:hover {
-    /*height:450px;*/
 }
 .dropdown-item{
     padding-left: 0px;
@@ -253,12 +249,11 @@ section .content {
 .nav_section {
     overflow:hidden;
     background-color:black;
+    height: 450px;
 }
-section{
+#nav_div{
     height:100%;
     width:100%;
-    /*background:radial-gradient(#333,#000);
-    background: radial-gradient(#fff,#0b4884);*/
     background: radial-gradient(#9ed192,#0b4884);
 }
 .leaf{
@@ -342,13 +337,10 @@ section p{
     top:40%;
     width:70%;
     font-family: 'Courgette', cursive;
-    /*font-size:4em;*/
     text-align:center;
     transform:translate ;
     color:#fff;
     overflow-wrap: break-word;
-    /*transform:translateY(-50%);*/
-
     font-size: 43px;
     line-height: 50px;
 }
@@ -356,186 +348,4 @@ section p{
 
 .fa-map-marked-alt {
     color : #0b4884;
-}
-
-/*----------------------------DEFILEMENT DES IMAGES---------------------------------------------------------------------*/
-#slideshow {
-    position: relative;
-    width: 100%;
-    height: 440px;
-    border: 1px solid #ddd;
-    background: #FFF;
-    /* CSS3 effects */
-    /*background: linear-gradient(#FFF, #FFF 20%, #EEE 80%, #DDD);*/
-    border-radius: 2px 2px 2px 2px;
-    box-shadow: 0 0 3px rgba(0,0,0, 0.2);
-}
-#slideshow:before,
-#slideshow:after {
-    position: absolute;
-    bottom:16px;
-    z-index: -10;
-    width: 100%;
-    height: 440px;
-    content: " ";
-    background: rgba(0,0,0,0.1);
-    border-radius: 50%;
-    box-shadow: 0 0 3px rgba(0,0,0, 0.4), 0 20px 10px rgba(0,0,0, 0.7);
-}
-#slideshow:before {
-    left:0;
-    transform: rotate(-4deg);
-}
-#slideshow:after {
-    right:0;
-    transform: rotate(4deg);
-}
-/* gestion des dimensions et débordement du conteneur */
-#slideshow .container {
-    position:relative;
-    width: 100%;
-    height: 440px;
-    overflow: hidden;
-}
-/* on prévoit un petit espace gris pour la timeline */
-#slideshow .container:after {
-    position:absolute;
-    bottom: 0; left:0;
-    content: " ";
-    width: 100%;
-    height: 1px;
-    background: #999;
-}
-/*
-   le conteneur des slides
-   en largeur il fait 100% x le nombre de slides
-*/
-#slideshow .slider {
-    position: absolute;
-    left:0; top:0;
-    width: 400%;
-    height: 100%;
-    animation: slider 32s infinite;
-}
-/* annulation des marges sur figure */
-#slideshow figure {
-    position:relative;
-    display:inline-block;
-    padding:0; margin:0;
-}
-/* petit effet de vignette sur les images */
-#slideshow figure:after {
-    position: absolute;
-    display:block;
-    content: " ";
-    top:0; left:0;
-    width: 100%; height: 100%;
-    box-shadow: 0 0 65px rgba(0,0,0, 0.5) inset;
-}
-/* styles de nos légendes */
-#slideshow figcaption {
-    position:absolute;
-    left:0; right:0; bottom: 5px;
-    padding: 20px;
-    margin:0;
-    border-top: 1px solid rgb(225,225,225);
-    text-align:center;
-    letter-spacing: 0.05em;
-    word-spacing: 0.05em;
-    font-family: Georgia, Times, serif;
-    background: #fff;
-    background: rgba(255,255,255,0.7);
-    color: #555;
-    text-shadow: -1px -1px 0 rgba(255,255,255,0.3);
-    animation: figcaptionner 32s infinite;
-}
-@-webkit-keyframes slider {
-    0%, 20%, 100%	{ left: 0 }
-    25%, 45%		{ left: -100% }
-    50%, 70%		{ left: -200% }
-    75%, 95%		{ left: -300% }
-}
-@-moz-keyframes slider {
-    0%, 20%, 100%	{ left: 0 }
-    25%, 45%		{ left: -100% }
-    50%, 70%		{ left: -200% }
-    75%, 95%		{ left: -300% }
-}
-#timeline {
-    position: absolute;
-    background: #999;
-    bottom: 15px;
-    left: 15px;
-    height: 1px;
-    background: rgb(214,98,13);
-    background: rgba(214,98,13,.8);
-    width: 0;
-    /* fonction d'animation */
-    animation: timeliner 32s infinite;
-}
-@-moz-keyframes timeliner {
-    0%, 25%, 50%, 75%	, 100%		{ width: 0;		}
-    20%, 45%, 70%, 90%		{ width: 97%;	}
-}
-@-moz-keyframes figcaptionner {
-    0%, 25%, 50%, 75%, 100%						{ bottom: -55px;	}
-    5%, 20%, 30%, 45%, 55%, 70%, 80%, 95%		{ bottom: 5px;		}
-}
-@-webkit-keyframes timeliner {
-    0%, 25%, 50%, 75%	, 100%		{ width: 0;		}
-    20%, 45%, 70%, 90%		{ width: 97%;	}
-}
-@-webkit-keyframes figcaptionner {
-    0%, 25%, 50%, 75%, 100%						{ bottom: -55px;	}
-    5%, 20%, 30%, 45%, 55%, 70%, 80%, 95%		{ bottom: 5px;		}
-}
-.play_commands {
-    /* positionnement en haut à droite */
-    position: absolute;
-    top: 25px; right: 25px;
-    z-index: 10;
-    /* dimensionnement des icônes */
-    width: 22px;
-    height: 22px;
-    text-indent: -9999px;
-    border:0 none;
-    /* placez l'opacité à 1 si vous souhaitez voir les commandes */
-    opacity: 0;
-    /* préparation de transition sur opacicty et right */
-    transition: opacity 1s, right 1s;
-}
-/* on décale play légèrement sur la gauche */
-.play { right: 55px; cursor: default; }
-/* création de l'icône pause avec 2 pseudos éléments */
-.pause:after,
-.pause:before {
-    position: absolute;
-    display: block;
-    content: " ";
-    top:0;
-    width:38%;
-    height: 22px;
-    background: #fff;
-    background: rgba(255,255,255,0.5);
-}
-.pause:after { right:0; }
-.pause:before {	left:0; }
-/* création de l'icône play avec des bordures */
-.play {
-    width: 1px;
-    height: 1px;
-    /* les transparentes forment la flèche */
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 20px solid #fff;
-    border-left: 20px solid rgba(255,255,255,0.5);
-    /* renseignez 1 pour voir l'icône de suite */
-    opacity: 0;
-}
-/* apparition du bouton pause au survole */
-/* apparition des boutons au focus */
-#slideshow:hover .pause,
-.play_commands:focus {
-    opacity: 1;
-    outline: none;
 }

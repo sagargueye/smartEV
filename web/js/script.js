@@ -1,12 +1,3 @@
-// loading: when chargement de la page
-window.onload = function() {
-	// Show full page LoadingOverlay
-	/* $.LoadingOverlay("show", {
-		image       : "",
-		fontawesome : "fa fa-cog fa-spin fas fa-map-marked-alt"
-	});*/
-};
-
 var map;
 mapboxgl.accessToken = "pk.eyJ1IjoiY3Zlcmdub24iLCJhIjoiY2s2ajVodGoyMDFvaTNxbGp1eGRqa3ZwbCJ9._FqRqJ8LXtsLYYURGUcydQ";
 var start_geocoder;
@@ -37,7 +28,7 @@ $(document).ready(function () {
 	});
 
 
-	map.on('click', onMapClick);	
+	map.on('click', onMapClick);
 	num_click = 0;
 	var markers = L.markerClusterGroup();
 
@@ -56,17 +47,17 @@ $(document).ready(function () {
 	map.addLayer(osmLayer);
 	map.addLayer(markers);
 
-	start_geocoder = new MapboxGeocoder({  
+	start_geocoder = new MapboxGeocoder({
 		accessToken: mapboxgl.accessToken,
-		mapboxgl: map, 
+		mapboxgl: map,
 		marker: true
 	});
 
 	document.getElementById("start_geocoder").appendChild(start_geocoder.onAdd(map));
-	
-	end_geocoder = new MapboxGeocoder({  
+
+	end_geocoder = new MapboxGeocoder({
 		accessToken: mapboxgl.accessToken,
-		mapboxgl: map, 
+		mapboxgl: map,
 		marker: true
 	});
 
@@ -146,15 +137,11 @@ function get_itineraire(arrayLatLng){
 	arrayLatLng.forEach(function(element, index) {		
 		if(arrayLatLng.length == index + 1)
 				LatLng = LatLng + element;
-		else if(index%2 != 0)
-		{
+		else if(index%2 != 0)	{
 			LatLng = LatLng + element + ";";
-		}
-		else
-		{
+		}else{
 			LatLng = LatLng + element + ",";
 		}
-		
 	});
 	
 	url1 = "https://api.mapbox.com/directions/v5/mapbox/driving/"+LatLng+"?geometries=geojson&steps=true&language=fr&access_token=pk.eyJ1IjoiY3Zlcmdub24iLCJhIjoiY2s2ajVodGoyMDFvaTNxbGp1eGRqa3ZwbCJ9._FqRqJ8LXtsLYYURGUcydQ";
@@ -162,8 +149,7 @@ function get_itineraire(arrayLatLng){
 			fetch(url1).then(function(res) { return res.json(); })
 	])
 	.then(function(data) {
-		if(data[0]["routes"][0] != undefined && document.getElementById("type_vehicule").value != 0)
-		{
+		if(data[0]["routes"][0] != undefined && document.getElementById("type_vehicule").value != 0)	{
 			var array_coordinates = [];
 		
 			// Les coordonnées de Latitude/Longitude n'étant pas dans le même ordre dans toutes les API, on les réordonne
@@ -177,21 +163,17 @@ function get_itineraire(arrayLatLng){
 			
 			//var autonomieVoiture = getAutonomieVehicule($("select[id='type_vehicule'] option:selected").val()) ;
 			var boolCheckItineraire = true;
-			data[0]["routes"][0]["legs"].forEach(function(element) {
-				if(autonomieVoiture < element["distance"])
-				{
+			data[0]["routes"][0]["legs"].forEach(function(element){
+				if(autonomieVoiture < element["distance"]){
 					search_new_itineraire(element);
 					boolCheckItineraire = false;
 				}
 			});
-			if(boolCheckItineraire == true)
-			{
+			if(boolCheckItineraire == true)	{
 				draw_itineraire(array_coordinates);
 				displayItineraire(data);
 			}
-		}
-		else
-		{
+		}else{
 			alert("impossible");
 		}
 	});
@@ -219,20 +201,15 @@ function search_new_itineraire(leg){
 	var pos = [];
 	var boolGetStep = false;
 	leg["steps"].some(function(element, index) {
-		if(!boolGetStep)
-		{
-			if((distance + element["distance"]) < 0.5*autonomieVoiture)
-			{
+		if(!boolGetStep){
+			if((distance + element["distance"]) < 0.5*autonomieVoiture){
 				distance = distance + element["distance"];
-			}
-			else
-			{	
+			}else{
 				var distanceStep = element["distance"];
 				var nbPositionInStep = Math.trunc(element["geometry"]["coordinates"].length);
 				var distancePositionInStep = Math.trunc(distanceStep/nbPositionInStep);
 				var index = 0;
-				while(distance + distancePositionInStep < distanceStep && distance + distancePositionInStep < 0.8*autonomieVoiture)
-				{
+				while(distance + distancePositionInStep < distanceStep && distance + distancePositionInStep < 0.8*autonomieVoiture){
 					if(distance > 0.5*autonomieVoiture && element["geometry"]["coordinates"][index] != undefined)
 						pos.push(element["geometry"]["coordinates"][index]);
 					index++;
@@ -242,34 +219,25 @@ function search_new_itineraire(leg){
 				if(distance + distancePositionInStep > 0.8*autonomieVoiture)
 					return true;
 				boolGetStep = true;
-
 			}
-		}
-		else
-		{
-			if(distance + element["distance"] < 0.8*autonomieVoiture)
-			{
+		}else{
+			if(distance + element["distance"] < 0.8*autonomieVoiture){
 				element["geometry"]["coordinates"].forEach(function(element) {
 					if(element != undefined)
 						pos.push(element);		
 				});
 				distance = distance + element["distance"];
-
-			}
-			else
-			{
+			}else{
 				var distanceStep = element["distance"];
 				var nbPositionInStep = Math.trunc(element["geometry"]["coordinates"].length);
 				var distancePositionInStep = Math.trunc(distanceStep/nbPositionInStep);
 				var index = 0;
-				while(distance + distancePositionInStep < 0.8*autonomieVoiture)
-				{
+				while(distance + distancePositionInStep < 0.8*autonomieVoiture){
 					if(element["geometry"]["coordinates"][index] != undefined)
 						pos.push(element["geometry"]["coordinates"][index]);
 					index++;
 					distance = distance + distancePositionInStep;	
 				}
-
 				return true;
 			}
 		}
@@ -279,15 +247,13 @@ function search_new_itineraire(leg){
 
 	var posAllNearestStation = [];
 	pos.forEach(function(element) {
-
 		posAllNearestStation.push(searchNearestStation(element));
 	});
 	
 	var minDistance = 100;
 	var index = 0;
 	var indexMin = 0;
-	while(index < pos.length)
-	{
+	while(index < pos.length)	{
 		var tempDistance = getDistance(posAllNearestStation[index][0], posAllNearestStation[index][1], pos[index][0], pos[index][1]);
 		if(tempDistance < minDistance)
 		{
@@ -454,8 +420,7 @@ function displayItineraire(itineraire){
 
 }
 
-function getPalierByPuissance(puissance)
-{
+function getPalierByPuissance(puissance){
 	if(puissance > 40)
 		return 75;
 	else if(35 <= puissance < 40)
@@ -474,8 +439,7 @@ function getPalierByPuissance(puissance)
 		return 98;	
 }
 
-function getTempsRechargement()
-{
+function getTempsRechargement(){
 	var tempsRechargement = 0;
 	
 	if(puissanceStation > puissanceMaximaleVoiture)
