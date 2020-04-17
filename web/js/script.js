@@ -34,6 +34,13 @@ $(document).ready(function () {
 	num_click = 0;
 	var markers = L.markerClusterGroup();
 
+
+	var iconCharginStation = L.icon({
+		iconUrl: 'charging-station.png',
+		iconSize:     [32, 32], // size of the icon
+		popupAnchor:  [-5, -15] // point from which the popup should open relative to the iconAnchor
+	});
+
 	stations_recharge.forEach(function(element) {
 		var AddressLine1 = (element['AddressInfo']['AddressLine1'])?element['AddressInfo']['AddressLine1']:"";
 		var Town = (element['AddressInfo']['Town'])?element['AddressInfo']['Town']:"";
@@ -41,7 +48,7 @@ $(document).ready(function () {
 		var customPopup = AddressLine1 + "<br>"
 		+ Town + "<br>"
 		+ ContactTelephone1;
-		var marker = L.marker([element["AddressInfo"]["Latitude"], element["AddressInfo"]["Longitude"]]);
+		var marker = L.marker([element["AddressInfo"]["Latitude"], element["AddressInfo"]["Longitude"]], {icon: iconCharginStation});
 		marker.bindPopup(customPopup);
 		markers.addLayer(marker);
 	});
@@ -115,17 +122,7 @@ $(document).ready(function () {
 	});
 
 
-	var greenIcon = L.icon({
-		iconUrl: 'leaf-green.png',
-		shadowUrl: 'leaf-shadow.png',
 
-		iconSize:     [38, 95], // size of the icon
-		shadowSize:   [50, 64], // size of the shadow
-		iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		shadowAnchor: [4, 62],  // the same for the shadow
-		popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-	});
-	L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map);
 });
 
 function searchItineraire(){
@@ -307,6 +304,7 @@ function search_new_itineraire(leg){
 	arrayLatLng.push(posAllNearestStation[indexMin][1]);
 	arrayLatLng.push(end_longitude);
 	arrayLatLng.push(end_latitude);
+	console.log("ahhh");
 	get_itineraire(arrayLatLng);
 }
 
@@ -393,6 +391,23 @@ function displayItineraire(itineraire){
 	$('#pointilé').html('');
 	
 	console.log(itineraire);
+	
+	var iconStep = L.icon({
+		iconUrl: 'dot.png',
+		iconSize:     [15, 15], // size of the icon
+	});
+	
+	var iconEnd = L.icon({
+		iconUrl: 'endItineraire.png',
+		iconSize:     [40, 40], // size of the icon
+	});
+	
+	itineraire[0]["waypoints"].forEach(function(element, index) {
+		if(index + 1 != itineraire[0]["waypoints"].length)
+			L.marker([element["location"][1], element["location"][0]], {icon: iconStep}, {zIndexOffset: 5}).addTo(map);		
+		else
+			L.marker([element["location"][1], element["location"][0]], {icon: iconEnd}, {zIndexOffset: 5}).addTo(map);		
+	});
 	
 	itineraire[0]["routes"][0]["legs"].forEach(function(legs, index) {
 		legs["steps"].forEach(function(steps) {
