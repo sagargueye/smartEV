@@ -12,12 +12,15 @@ var puissanceMaximaleVoiture;
 var end_latitude;
 var end_longitude;
 var bool;
-var markerDepart;
-var markerArrivee;
 var polyline;
 var itineraireActive = false;
+var stationSelected;
 
 
+/*
+Cette fonction est automatiquement exécutée lorsque l'utilisateur arrive sur la page.
+Elle initialise toutes les choses dont nous aurons besoin : la carte, les marqueurs etc ..
+*/
 $(document).ready(function () {
 	map = L.map('map').setView([48.833, 2.333], 7); // LIGNE 14
 	var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
@@ -118,6 +121,11 @@ $(document).ready(function () {
 	});
 });
 
+
+
+/* Cette fonction est appelée lorsque l'utilisateur utilise le bouton RECHERCHER.
+Elle permet, à partir des adresses saisies par l'utilisateur, de récupérer les coordonnées géographiques correspondantes à ces adresses (geocoding).
+*/
 function searchItineraire(){
 	//verication des données saisies par l'utilisateur
 	if(!$('#start_geocoder').val() || !$('#end_geocoder').val() || !$('#type_vehicule').val()){
@@ -170,6 +178,11 @@ function searchItineraire(){
 	});
 }
 
+
+/*
+Cette fonction permet de rechercher un itinéaire.
+Elle prends en paramètre un tableau de coordonnées (lat,long) qui définissent les différentes étapes de l'itinéraire.
+*/
 function get_itineraire(arrayLatLng){
 	var LatLng = "";
 	arrayLatLng.forEach(function(element, index) {		
@@ -187,7 +200,8 @@ function get_itineraire(arrayLatLng){
 			fetch(url1).then(function(res) { return res.json(); })
 	])
 	.then(function(data) {
-		if(data[0]["routes"][0] != undefined && document.getElementById("type_vehicule").value != 0){
+		console.log(data);
+		if(data[0]["routes"] != undefined && document.getElementById("type_vehicule").value != 0){
 			var array_coordinates = [];		
 			// Les coordonnées de Latitude/Longitude n'étant pas dans le même ordre dans toutes les API, on les réordonne
 			data[0]["routes"][0]["legs"].forEach(function(element) {
@@ -209,8 +223,9 @@ function get_itineraire(arrayLatLng){
 				draw_itineraire(array_coordinates);
 				displayItineraire(data);
 			}
-		}else{
-			//alert("impossible");
+		}
+		else
+		{
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET", "partialColorBox.html");
 			xhr.onreadystatechange = function () {
@@ -225,37 +240,52 @@ function get_itineraire(arrayLatLng){
 	});
 }
 
+
+/*
+Cette fonction permet de supprimer tous les éléments concernant l'ancien itinéraire :
+- la polyline de l'itinéraire
+- les différents marqueurs
+*/
 function deleteOldItineraire()
 {
-		polyline.remove(map);
-		arrayLatLng = [];
+	arrayMarkers.forEach(function(element) {
+		map.removeLayer(element);
+	});
+	polyline.remove(map);
+	arrayLatLng = [];
 }
 
+
+/*
+Cette fonction permet de dessiner l'itinéraire sur la carte.
+Elle prends en paramètre un tableau de coordonnées (lat,long).
+*/
 function draw_itineraire(array_coordinates){
 	polyline = L.polyline(array_coordinates, {color: 'red'}).addTo(map);
 	map.fitBounds(polyline.getBounds());
 	itineraireActive = true;
 }
 
-// Explication rapide de l'algorithme 
-// Je récupère toutes les coordonnées à partir du moment où la voiture passe en dessous des 50% de km d'autonomie (jusqu'à 20%, histoire de laisser une marge de réserve)
-// Pour chaque coordonnées récupérées (des centaines), je récupère la station de recharge la plus proche. Cela m'oblige à parcourir la liste de toutes les stations de recharge
-// Chaque position de notre itinéraire (entre 50% et 20% de batterie) est donc associée à une station
-// Il ne reste plus qu'à récupérer la station où là distance est la plus faible entre notre itinéraire et la station
-
-// Cet algorithme est loin d'être parfait et présente de nombreux défauts :
-// - La distance est calculée à vol d'oiseau : en pratique, la distance est plus longue
-// - Je parcours la liste de toutes les stations pour chaque coordonnée : c'est long. En pratique, il faudrait faire appel à l'API d'OpenChargeMap et utiliser des paramètres pour restreindre la zone et récupérer seulement quelques stations.
-// Cela permettrait de gagner en temps d'exécution. En l'occurrence, pour éviter de surcharger l'API d'OpenChargeMap, je me suis contenté de cette méthode.
-
+/*
+Cette fonction permet de calculer un nouvel itinéraire.
+Elle prends en paramètre une étape de l'itinéraire (qui a une distance supérieure à l'autonomie maximale de la voiture).
+Elle va ensuite définir la station optimale à laquelle il faut s'arrêter.
+Pour en savoir plus sur le fonctionnement de notre algorithme, je vous invite à consulter le schéma à la base de notre projet intitulé "Algorithme_itineraire.png".
+*/
 function search_new_itineraire(leg){
+	var tempLowestAutonomie;
+	if(autonomieVoiture < 300000)
+		tempLowestAutonomie = 0.4*autonomieVoiture;
+	else
+		tempLowestAutonomie = 0.5*autonomieVoiture;
+	
 	arrayLatLng.splice(arrayLatLng.length -2, 2);
 	var distance = 0;
 	var pos = [];
 	var boolGetStep = false;
 	leg["steps"].some(function(element, index) {
 		if(!boolGetStep){
-			if((distance + element["distance"]) < 0.5*autonomieVoiture){
+			if((distance + element["distance"]) < tempLowestAutonomie){
 				distance = distance + element["distance"];
 			}else{
 				var distanceStep = element["distance"];
@@ -263,7 +293,7 @@ function search_new_itineraire(leg){
 				var distancePositionInStep = Math.trunc(distanceStep/nbPositionInStep);
 				var index = 0;
 				while(distance + distancePositionInStep < distanceStep && distance + distancePositionInStep < 0.8*autonomieVoiture){
-					if(distance > 0.5*autonomieVoiture && element["geometry"]["coordinates"][index] != undefined)
+					if(distance > tempLowestAutonomie && element["geometry"]["coordinates"][index] != undefined)
 						pos.push(element["geometry"]["coordinates"][index]);
 					index++;
 					distance = distance + distancePositionInStep;	
@@ -273,7 +303,7 @@ function search_new_itineraire(leg){
 					return true;
 				boolGetStep = true;
 			}
-		}else{
+		}else {
 			if(distance + element["distance"] < 0.8*autonomieVoiture){
 				element["geometry"]["coordinates"].forEach(function(element) {
 					if(element != undefined)
@@ -306,7 +336,7 @@ function search_new_itineraire(leg){
 	var minDistance = 100;
 	var index = 0;
 	var indexMin = 0;
-	while(index < pos.length)	{
+	while(index < pos.length) {
 		var tempDistance = getDistance(posAllNearestStation[index][0], posAllNearestStation[index][1], pos[index][0], pos[index][1]);
 		if(tempDistance < minDistance)
 		{
@@ -315,7 +345,6 @@ function search_new_itineraire(leg){
 		}
 		index++;
 	}
-	
 	arrayLatLng.push(posAllNearestStation[indexMin][0]);
 	arrayLatLng.push(posAllNearestStation[indexMin][1]);
 	arrayLatLng.push(end_longitude);
@@ -323,6 +352,10 @@ function search_new_itineraire(leg){
 	get_itineraire(arrayLatLng);
 }
 
+/*
+Cette fonction permet de calculer la distance à vol d'oiseau entre deux positions.
+Elle prends en paramètre deux latitudes et deux longitudes et retourne la distance en kilomètre.
+*/
 function getDistance(lat1,lon1,lat2,lon2) {
 	var R = 6371; // km (change this constant to get miles)
 	var dLat = (lat2-lat1) * Math.PI / 180;
@@ -332,10 +365,14 @@ function getDistance(lat1,lon1,lat2,lon2) {
 		Math.sin(dLon/2) * Math.sin(dLon/2);
 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 	var d = R * c;
-	return Math.round(d);
+	return d;
 }
 
-function searchNearestStation(position){
+/*
+Cette fonction permet de trouver la station de recharge la plus proche 
+Elle prends en paramètre une position (lat,long) sur l'itinéraire et retourne la position de la station la plus proche de cette position.
+*/
+function searchNearestStation(position) {
 	var min = 100;
 	var nearestStation;
 	stations_recharge.forEach(function(element) {
@@ -346,11 +383,16 @@ function searchNearestStation(position){
 			nearestStation = element;
 		}
 	});
+	stationSelected = nearestStation;
 	var pos = [nearestStation["AddressInfo"]["Longitude"],nearestStation["AddressInfo"]["Latitude"]];
 	return pos;
 
 }
 
+/*
+Cette fonction est automatiquement appelée lorsque l'utilisateur clique sur la carte.
+Elle ajoute un marqueur à l'endroit ou il a cliqué, et modifie l'adresse de départ/l'adresse d'arrivée en utilisant le reverse geocoding.
+*/
 function onMapClick(e) {
 	var url_reverse_geocoding = "https://eu1.locationiq.com/v1/reverse.php?key=" + token_locationiq + "&lat=" + e.latlng["lat"] + "&lon=" + e.latlng["lng"] + "&format=json";
 
@@ -379,47 +421,54 @@ function onMapClick(e) {
 			adresse = data[0]["display_name"];
 		
 		if(num_click == 0)
-		{
 			document.getElementById("start_geocoder").value = adresse;
-			if(markerDepart != undefined)
-				map.removeLayer(markerDepart);
-			markerDepart = L.marker([e.latlng["lat"] , e.latlng["lng"]]).addTo(map);
-		}
 		if(num_click == 1)
-		{
-			if(markerArrivee != undefined)
-				map.removeLayer(markerArrivee);
-			markerArrivee = L.marker([e.latlng["lat"] , e.latlng["lng"]]).addTo(map);
 			document.getElementById("end_geocoder").value = adresse;
-		}
 		num_click++;
 
 		
 	});
 }
 
+/*
+Cette fonction permet de gérer tout l'affichage de l'itinéraire (instructions, temps, distance ..)
+Il ajoute également les marqueurs sur le point de départ, la destination et les étapes de rechargement
+*/
 function displayItineraire(itineraire){
-	puissanceStation = 40;
+
+	var maxPuissanceStation = 0;
+	
+	if(stationSelected != undefined)
+	{
+		stationSelected["Connections"].forEach(function(element) {
+			if(element["PowerKW"] > maxPuissanceStation)
+				puissanceStation = element["PowerKW"]
+		});
+	}
 	var duration = 0;
-	//on vide l'itinérair av de recharger le nouveau
+	//on vide l'itinéraire avant de recharger le nouveau
 	$('#itindata').html('');
 	$('#pointilé').html('');
 
 	var iconStep = L.icon({
 		iconUrl: 'images/dot.png',
-		iconSize:     [15, 15], // size of the icon
+		iconSize:     [15, 15],
 	});
 	
 	var iconEnd = L.icon({
 		iconUrl: 'images/endItineraire.png',
-		iconSize:     [40, 40], // size of the icon
+		iconSize:     [40, 40], 
 	});
 	
+	arrayMarkers =[];
 	itineraire[0]["waypoints"].forEach(function(element, index) {
+		var tempMarker;
+		console.log("a");
 		if(index + 1 != itineraire[0]["waypoints"].length)
-			L.marker([element["location"][1], element["location"][0]], {icon: iconStep}, {zIndexOffset: 5}).addTo(map);		
+			tempMarker = L.marker([element["location"][1], element["location"][0]], {icon: iconStep}, {zIndexOffset: 5}).addTo(map);		
 		else
-			L.marker([element["location"][1], element["location"][0]], {icon: iconEnd}, {zIndexOffset: 5}).addTo(map);		
+			tempMarker = L.marker([element["location"][1], element["location"][0]], {icon: iconEnd}, {zIndexOffset: 5}).addTo(map);	
+		arrayMarkers.push(tempMarker);		
 	});
 	
 	itineraire[0]["routes"][0]["legs"].forEach(function(legs, index) {
@@ -489,6 +538,12 @@ function displayItineraire(itineraire){
 
 }
 
+
+
+/*
+Cette fontion permet de calculer le SOCPalier.
+Elle prends en paramètre une puissance, et retourne le SOCPalier correspondant à cette puissance.
+*/
 function getPalierByPuissance(puissance){
 	if(puissance > 40)
 		return 75;
@@ -508,7 +563,12 @@ function getPalierByPuissance(puissance){
 		return 98;	
 }
 
-function getTempsRechargement(){
+
+/*
+Cette fonction permet de calculer le temps de rechargement.
+Elle retourne un temps en minute.
+*/
+function getTempsRechargement() {
 	var tempsRechargement = 0;
 	
 	if(puissanceStation > puissanceMaximaleVoiture)
