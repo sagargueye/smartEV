@@ -22,7 +22,8 @@ Les 2 étapes a suivre: <br>
     1) Télécharger le projet depuis git `https://github.com/sagargueye/smartEV`<br>
     2) Ensuite lancer le fichier `index.html` depuis votre navigateur<br>
     
-##    
+## la page est responsive ;)
+
 
 
 
