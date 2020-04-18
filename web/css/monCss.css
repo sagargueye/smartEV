@@ -243,8 +243,47 @@ section .content {
 .link{
     color: #b3b3b4 !important;
 }
+/*----------------------------colorbox--------------------------------------------------------------------------*/
+.show{
+    width: 100%;
+}
+.panel {
+    margin-bottom: 1px;
+    background-color: #fff;
+    border: 1px solid #0b4884;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
 
-
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    text-align: center;
+    color: white;
+    background-color: #0b4884;
+}
+.panel-body {
+    padding: 15px;
+}
+.panel-body > .form-group{
+    color: black;
+}
+#colorbox, #cboxOverlay, #cboxWrapper{position:fixed; top:0; left:0; z-index:9999; overflow:hidden;}
+#divcolorbox{
+    background-color: #0b4884;
+    margin: 0 auto;margin-top: 5%;margin-bottom: 5%;
+    border-radius: 3px; max-width: 45%;
+    border: solid 1px #0b4884;
+}
+.modal-open{
+    overflow: initial!important;
+}
+.modal-backdrop{
+    background-color:#fff!important;
+}
 /*----------------------------SECTION BANDE FLOTTANT AVEC IMAGE--------------------------------------------------------------------*/
 .nav_section {
     overflow:hidden;
@@ -345,7 +384,6 @@ section p{
     line-height: 50px;
 }
 /*----------------------------LOADING PAGE GIF--------------------------------------------------------------------------*/
-
 .fa-map-marked-alt {
     color : #0b4884;
 }

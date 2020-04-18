@@ -19,10 +19,6 @@ var itineraireActive = false;
 
 
 $(document).ready(function () {
-	setTimeout(function(){
-		$.LoadingOverlay("hide");	// Hide LoadingOverlay after loading page
-	}, 3000);
-
 	map = L.map('map').setView([48.833, 2.333], 7); // LIGNE 14
 	var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { // LIGNE 16
 			attribution: '© OpenStreetMap contributors',
@@ -120,12 +116,23 @@ $(document).ready(function () {
 			puissanceMaximaleVoiture = tempVoiture["puissanceMaximale"];
 		}
 	});
-
-
-
 });
 
 function searchItineraire(){
+	//verication des données saisies par l'utilisateur
+	if(!$('#start_geocoder').val() || !$('#end_geocoder').val() || !$('#type_vehicule').val()){
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "partialColorBox.html");
+		xhr.onreadystatechange = function () {
+			if (this.readyState < 4) return;
+			if (this.status == 200) {
+				$("#colorbox").html(this.responseText);
+				$("#colorbox").modal();
+			} else {console.log("erreur réseau : " + this.status + " " + this.statusText);}
+		};
+		xhr.send();
+		return true;
+	}
 // Show full page LoadingOverlay
 	$.LoadingOverlay("show", {
 		image       : "",
@@ -143,7 +150,6 @@ function searchItineraire(){
 			,fetch(url2).then(function(res) { return res.json(); })
 	])
 	.then(function(data) {
-	
 		if(itineraireActive)
 			deleteOldItineraire();
 		start_longitude = data[0][0]["lon"];
@@ -158,7 +164,9 @@ function searchItineraire(){
 	}).
 	finally(function() {
 		// Hide LoadingOverlay
-		$.LoadingOverlay("hide");
+		setTimeout(function () {
+			$.LoadingOverlay("hide");
+		},3000);
 	});
 }
 
@@ -189,8 +197,6 @@ function get_itineraire(arrayLatLng){
 					});
 				});
 			});
-			
-
 
 			var boolCheckItineraire = true;
 			data[0]["routes"][0]["legs"].forEach(function(element){
@@ -204,7 +210,17 @@ function get_itineraire(arrayLatLng){
 				displayItineraire(data);
 			}
 		}else{
-			alert("impossible");
+			//alert("impossible");
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "partialColorBox.html");
+			xhr.onreadystatechange = function () {
+				if (this.readyState < 4) return;
+				if (this.status == 200) {
+					$("#colorbox").html(this.responseText);
+					$("#colorbox").modal();
+				} else {console.log("erreur réseau : " + this.status + " " + this.statusText);}
+			};
+			xhr.send();
 		}
 	});
 }
@@ -304,7 +320,6 @@ function search_new_itineraire(leg){
 	arrayLatLng.push(posAllNearestStation[indexMin][1]);
 	arrayLatLng.push(end_longitude);
 	arrayLatLng.push(end_latitude);
-	console.log("ahhh");
 	get_itineraire(arrayLatLng);
 }
 
@@ -389,9 +404,7 @@ function displayItineraire(itineraire){
 	//on vide l'itinérair av de recharger le nouveau
 	$('#itindata').html('');
 	$('#pointilé').html('');
-	
-	console.log(itineraire);
-	
+
 	var iconStep = L.icon({
 		iconUrl: 'images/dot.png',
 		iconSize:     [15, 15], // size of the icon
@@ -433,7 +446,6 @@ function displayItineraire(itineraire){
 			puissanceVoiture  = Math.trunc((autonomieRestanteKm * 100)/autonomieVoiture);
 			var tempTempsRechargement = getTempsRechargement();
 			duration = duration + tempTempsRechargement;
-			console.log(duration);
 			$('#itindata').append('<div><i class="fas fa-charging-station faInfo"></i> <span id="info_station_recharge" > Temps de rechargement: ' + tempTempsRechargement + ' min</span></div>')
 		}
 	});
