@@ -16,7 +16,7 @@ On s'est partagé les tâches dès le debut du projet ce qui nous a permis d'ava
 
 
 ## Fonctionnement du site<br>
-Le site est adaptable facilement depuis n'importe quel pc, il nécessite 
+Le site est facilement adaptable depuis n'importe quel pc, il nécessite 
 pas de paramétrage.<br>
 Les 2 étapes a suivre: <br>
     1) Téléchargé le projet depuis git `https://github.com/sagargueye/smartEV`<br>
