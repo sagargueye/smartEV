@@ -1,0 +1,7 @@
+body{
+    padding-top: 56px;
+}
+
+.bg-dark {
+    background-color: rgb(0, 0, 0)!important;
+}
